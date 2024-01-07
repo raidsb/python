@@ -23,4 +23,6 @@ num1 = int(input())
 num2 = int(input())
 print(num1 * num2)
 
-
+Links
+-----
+[1] libs: https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/   
