@@ -9,11 +9,36 @@
 s = "Hello"
 print(s[0])
 
+[3] f-string
+use f-string to make a string with different data types variables inside 
+int_var = 0
+float_var = 2.3
+bool_var = True
+
+str_var = f"this has different types {int_var} and {float_var} and {bool_var}" 
+this is better than 
+str_var = "this has different types" + str(int_var) + "and" + ...
+
 # integer
 [1] integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
 
 # float 
 [1] same as integer, can be written as 123_333.34 the _ to make it easier to read
+
+# type() 
+used to check the type of a variable: type(var) 
+
+# type conversion/casting 
+Type conversion and casting are related concepts in programming but can have different meanings depending on the context and the programming language:
+
+Type Conversion (implicit change of type): It refers to changing the data type of a variable to another compatible type. In many programming languages, implicit type conversion (also known as type coercion) occurs automatically when performing operations between different types. For example, converting an integer to a floating-point number during arithmetic operations.
+
+Casting (explicit change of type): Casting is a specific form of type conversion where a programmer explicitly converts a variable from one data type to another. It's a way to inform the compiler to treat a variable as a different type temporarily. In languages like C or C++, casting can be performed using specific syntax such as (type) variable (C-style cast) or static_cast<type>(variable) (C++ style cast).
+
+While casting is a form of type conversion, not all type conversions involve casting. Some conversions occur implicitly by the language itself, while casting explicitly instructs the compiler to perform the conversion.
+
+- convert int to string: str(int_var)
+- convert str to float: float(str_var)
 
 # Input
 [1] what does it do? 
@@ -33,6 +58,12 @@ the input value always returns string, so if getting a number should convert to 
 num1 = int(input())
 num2 = int(input())
 print(num1 * num2)
+
+Mathematical operations
+-----------------------
++, - , / , *, ** for exponent operation, // for full number div returns int not float
+PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
+
 
 Links
 -----
