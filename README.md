@@ -1,5 +1,9 @@
 # python
 
+# importing libraries
+[1] can write the importing statements this way: from library import lib1, lib2 
+or this way from library import (lib1, lib2) # the parentheses are used for grouping for better readiblity but optional.
+
 # String
 [1] single quotes vs double quotes: double quotes support string interpolation/formating with f or format function.
 - single quote takes the string as literal
@@ -59,11 +63,14 @@ num1 = int(input())
 num2 = int(input())
 print(num1 * num2)
 
-Mathematical operations
------------------------
+# Mathematical operations
 +, - , / , *, ** for exponent operation, // for full number div returns int not float
 PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
 
+# Functions 
+def raw_file_names(self) -> str: 
+this means a function that returns a string. it is optional in python and is meant to make it more readable
+more details about -> type: -> str: This part is a type hint, indicating that the method is expected to return a value of type str (string). Type hints are optional in Python, but they can provide information to developers and tools about the expected types of function parameters and return values.
 
 Links
 -----
