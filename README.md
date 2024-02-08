@@ -67,13 +67,22 @@ num2 = int(input())
 print(num1 * num2)
 
 # Mathematical operations
-+, - , / , *, ** for exponent operation, // for full number div returns int not float
+[1] +, - , / , *, ** for exponent operation, // for full number div returns int not float
 PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
+
+[2] math functions 
+floor(float number) to truncate float numbers 
 
 # Functions 
 def raw_file_names(self) -> str: 
 this means a function that returns a string. it is optional in python and is meant to make it more readable
 more details about -> type: -> str: This part is a type hint, indicating that the method is expected to return a value of type str (string). Type hints are optional in Python, but they can provide information to developers and tools about the expected types of function parameters and return values.
+
+# Reading csv files
+import csv
+with open(self.dataset_csv_file, 'r') as file:
+    csv_reader = csv.DictReader(file)
+    self.data_list = [row for row in csv_reader]
 
 Links
 -----
