@@ -23,6 +23,9 @@ str_var = f"this has different types {int_var} and {float_var} and {bool_var}"
 this is better than 
 str_var = "this has different types" + str(int_var) + "and" + ...
 
+[4] remove last n characters from a string
+my_str = my_str[:-1] # -1 for one char , -n for n characters
+
 # integer
 [1] integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
 
