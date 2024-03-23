@@ -26,8 +26,49 @@ str_var = "this has different types" + str(int_var) + "and" + ...
 [4] remove last n characters from a string
 my_str = my_str[:-1] # -1 for one char , -n for n characters
 
+[5] convert int to bin 
+'{0:08b}'.format(6) # this will format the int number 6 to bin and padding with 0s in 8 positions
+if this doesn't work, use f'{6:08b}'
+
+explaination:
+{} places a variable into a string
+0 takes the variable at argument position 0
+: adds formatting options for this variable (otherwise it would represent decimal 6)
+0 the character used for padding
+8 formats the number to eight digits zero-padded on the left
+b converts the number to its binary representation
+
+so no padding: f'{6:b}'
+
+[5.1] convert bin string to int 
+value = int(bString, 2)
+
+[6] 'str' object does not support item assignment. because strings are immutable, so can't change their characters in-place.
+if you want to replace characters in the string, you need to create another string and assign characters to it. 
+
+[7] lower case
+x = txt.lower()
+
+[8] check if is lower 
+c.islower()
+
+[9] replace a string/char
+song.replace('cold', 'hurt') # RETURNS A COPY, DOESN'T REPLACE IN PLACE
+
+[10] get the ascii char and ord of a character
+chr(ascii number) returns the char
+ord(char) returns the ordinal value of a char
+
+[11] check if alpha
+x = txt.isalpha() # returns bool
+
+[12] convert string to list
+x = list(string_val)
+ 
 # integer
 [1] integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
+
+[2] convert int to bin '{0:08b}'.format(6) 
 
 # float 
 [1] same as integer, can be written as 123_333.34 the _ to make it easier to read
@@ -67,7 +108,7 @@ num2 = int(input())
 print(num1 * num2)
 
 # Mathematical operations
-[1] +, - , / , *, ** for exponent operation, // for full number div returns int not float
+[1] +, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
 PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
 
 [2] math functions 
@@ -83,6 +124,26 @@ import csv
 with open(self.dataset_csv_file, 'r') as file:
     csv_reader = csv.DictReader(file)
     self.data_list = [row for row in csv_reader]
+
+# Dictionary
+[1] get list of keys
+keysList = list(mydict.keys()) 
+
+[2] check if key exists in keys
+if key_to_check in my_dict.keys():
+
+# Lists
+[1] create a list of length n init to 0s
+ listofzeros = [0] * n 
+ 
+# Enums 
+[1] define enums
+from enum import Enum 
+
+class Color(Enum):
+RED = 1
+GREEN = 2
+BLUE = 3 
 
 Links
 -----
