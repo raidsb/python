@@ -65,10 +65,18 @@ x = txt.isalpha() # returns bool
 [12] convert string to list
 x = list(string_val)
  
+[13] count how many times a char appears in a string
+string.count(char or substring, start, end)
+
 # integer
 [1] integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
 
 [2] convert int to bin '{0:08b}'.format(6) 
+{} places a variable into a string
+0 takes the variable at argument position 0
+: adds formatting options for this variable (otherwise it would represent decimal 6)
+08 formats the number to eight digits zero-padded on the left
+b converts the number to its binary representation
 
 # float 
 [1] same as integer, can be written as 123_333.34 the _ to make it easier to read
@@ -111,6 +119,11 @@ print(num1 * num2)
 [1] +, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
 PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
 
+[1.1] num1 ^ num2 is the xor operation.  ^ is the xor operator
+
+[1.2] get the log base 2 of a number 
+math.log2(2.7183) 
+
 [2] math functions 
 floor(float number) to truncate float numbers 
 
@@ -136,6 +149,47 @@ if key_to_check in my_dict.keys():
 [1] create a list of length n init to 0s
  listofzeros = [0] * n 
  
+[2] get a sectional subset of a list
+section = test_list[x: x + 3] # starts with index x to index x+3 but like range, the last element is not inclusive, means it includes elements from x to x + 2 not x + 3
+
+[2.1] using itertools slicing 
+itertools.islice(test_list, i, i + 3) # check what does this return 
+
+[3] get sum of a list
+sum(test_list[x: x + 3]) 
+
+[4] map function is used to apply a function on each element in a list. 
+for example: 
+list(map(str.capitalize, stringList)) # the map will apply the function str.capitalize on each element in stringList 
+then list is to convert this to a list # in the same list stringList? 
+
+[5] Python lists are mutable objects and here:
+
+	plot_data = [[]] * len(positions) 
+	you are repeating the same list len(positions) times.
+
+	>>> plot_data = [[]] * 3
+	>>> plot_data
+	[[], [], []]
+	>>> plot_data[0].append(1)
+	>>> plot_data
+	[[1], [1], [1]]
+	>>> 
+	Each list in your list is a reference to the same object. You modify one, you see the modification in all of them.
+
+	If you want different lists, you can do this way:
+
+	plot_data = [[] for _ in positions]
+	for example:
+
+	>>> pd = [[] for _ in range(3)]
+	>>> pd
+	[[], [], []]
+	>>> pd[0].append(1)
+	>>> pd
+	[[1], [], []]
+
+
 # Enums 
 [1] define enums
 from enum import Enum 
@@ -148,3 +202,9 @@ BLUE = 3
 Links
 -----
 [1] libs: https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/   
+
+# Algorithms 
+[1] arrays 
+
+[1.1] arrays problems where math operations are needed on the left vs the right of each element in the array. use a single loop to iterate over each element and make the operations left vs right, 
+example "Sherlock and array" problem 
