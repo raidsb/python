@@ -292,6 +292,8 @@ list1 = list(set(ranked)) # returns a newly created list
 [16] sorted(list)  returns a copy of the list while list.sort()/list.sort(reverse = True) sorts in place
 [17] reversed(list)returns a copy of the list while list.reverse() reverses in place
 
+[18] top of the stack: list[-1]
+
 # using ranges
 [1] use range in iterating 
 rule of thumb:
