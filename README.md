@@ -393,3 +393,6 @@ scores = [100, 90, 90, 80, 75, 60]
 alice_score = 65
 position = binary_search(scores, alice_score)
 print("Alice's score would be at position:", position)
+
+
+S[:Index] + S[Index + 1:]
