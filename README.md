@@ -9,8 +9,57 @@ or this way:
 ```
 from library import (lib1, lib2) # the parentheses are used for grouping for better readiblity but optional.
 ```
+## variables
+A variable is used to store data that will be used by the program. 
+The equal sign = is used to assign a value to a variable.
 
-# String
+## data types
+### primitive data 
+#### [1] integer
+In Python, the size of an integer depends on the platform and the version of Python being used. However, in most implementations:
+For Python 2.x, typically 32 bits, allowing values from -2,147,483,648 to 2,147,483,647 (inclusive).
+For Python 3.x, integers are dynamically allocated and can grow to accommodate arbitrarily large numbers limited only by available memory.
+
+so there is only one type in python to house whole integer numbers. 
+In Python 2, there were two distinct integer types: int and long. However, in Python 3, these two types were unified, and the long type was removed. Now, all integers in Python 3 are of type int, and they automatically switch to arbitrary-precision representation when they exceed the platform's limit for fixed-size integers.
+
+##### [1.1] writing integer values using _
+a = 123_333_444 # integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
+
+##### [1.2] convert int to bin '{0:08b}'.format(6) 
+{} places a variable into a string
+0 takes the variable at argument position 0
+: adds formatting options for this variable (otherwise it would represent decimal 6)
+08 formats the number to eight digits zero-padded on the left
+b converts the number to its binary representation
+
+
+## String
+### String 
+A string is a sequence of characters (letters, numbers, whitespace or punctuation) enclosed by quotation marks single or double. 
+If a string has to be broken into multiple lines, the backslash character \ can be used to indicate that the string continues on the next line.
+
+```
+user = "User Full Name"
+game = 'Monopoly'
+
+longer = "This string is broken up \
+over multiple lines"
+```
+
+### [1] string concatenation is done by '+'
+
+```
+# String concatenation
+
+first = "Hello "
+second = "World"
+
+result = first + second
+
+long_result = first + second + "!"
+```
+
 [1] single quotes vs double quotes: double quotes support string interpolation/formating with f or format function.
 - single quote takes the string as literal
 
@@ -74,17 +123,10 @@ x = list(string_val)
 [13] count how many times a char appears in a string
 string.count(char or substring, start, end)
 
-# integer
-[1] integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
+## Numbers
 
-[2] convert int to bin '{0:08b}'.format(6) 
-{} places a variable into a string
-0 takes the variable at argument position 0
-: adds formatting options for this variable (otherwise it would represent decimal 6)
-08 formats the number to eight digits zero-padded on the left
-b converts the number to its binary representation
 
-# float 
+#### float 
 [1] same as integer, can be written as 123_333.34 the _ to make it easier to read
 
 # type() 
@@ -121,17 +163,42 @@ num1 = int(input())
 num2 = int(input())
 print(num1 * num2)
 
-# Mathematical operations
-[1] +, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
+## Mathematical operations
+### [1] +, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
 PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
 
-[1.1] num1 ^ num2 is the xor operation.  ^ is the xor operator
+### [1.1] num1 ^ num2 is the xor operation.  ^ is the xor operator
 
-[1.2] get the log base 2 of a number 
+### [1.2] add a value to an existing variable and assign the new value back to the same variable. 
+
+```
+# Plus-Equal Operator
+
+counter = 0
+counter += 10
+
+# This is equivalent to
+
+counter = 0
+counter = counter + 10
+
+# The operator will also perform string concatenation
+
+message = "Part 1 of message "
+message += "Part 2 of message"
+```
+
+### [1.3] get the log base 2 of a number 
+
+```
 math.log2(2.7183) 
+```
 
-[2] math functions 
+### [2] math functions 
+
+```
 floor(float number) to truncate float numbers 
+```
 
 # Functions 
 def raw_file_names(self) -> str: 
