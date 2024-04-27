@@ -1,7 +1,9 @@
 # python
 
 ## importing libraries
-1. can write the importing statements this way:
+### [1] importing multiple libraries
+can write the importing statements this way:
+
 ```
 from library import lib1, lib2 
 ```
