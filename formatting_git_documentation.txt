@@ -1,0 +1,17 @@
+formatting github documentation
+headers:
+# A first-level heading
+## A second-level heading
+### A third-level heading
+-------------------------------
+quoting code:
+```
+code
+```
+-------------------------------
+bulleting:
+- or * or + to make a list
+1. for numbered bullets
+
+
+

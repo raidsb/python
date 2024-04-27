@@ -1,8 +1,14 @@
 # python
 
-# importing libraries
-[1] can write the importing statements this way: from library import lib1, lib2 
-or this way from library import (lib1, lib2) # the parentheses are used for grouping for better readiblity but optional.
+## importing libraries
+1. can write the importing statements this way:
+```
+from library import lib1, lib2 
+```
+or this way:
+```
+from library import (lib1, lib2) # the parentheses are used for grouping for better readiblity but optional.
+```
 
 # String
 [1] single quotes vs double quotes: double quotes support string interpolation/formating with f or format function.
