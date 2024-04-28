@@ -71,7 +71,7 @@ type(2.2) # float
 type(4E2) # float - 4*10 to the power of 2
 ```
 
-#### [1] integer
+### primitive datatype - integer
 In Python, the size of an integer depends on the platform and the version of Python being used. However, in most implementations:
 For Python 2.x, typically 32 bits, allowing values from -2,147,483,648 to 2,147,483,647 (inclusive).
 For Python 3.x, integers are dynamically allocated and can grow to accommodate arbitrarily large numbers limited only by available memory.
@@ -90,8 +90,7 @@ a = 123_333_444 # integer numbers can be written 123_333_444 this is same as 123
 b converts the number to its binary representation
 
 
-#### [2] String
-### String 
+### primitive datatype - String
 * A string is a sequence of characters (letters, numbers, whitespace or punctuation) enclosed by quotation marks single or double. 
 If a string has to be broken into multiple lines, the backslash character \ can be used to indicate that the string continues on the next line.
 * 'str' object does not support item assignment. because strings are immutable, so can't change their characters in-place.
@@ -105,23 +104,6 @@ game = 'Monopoly'
 longer = "This string is broken up \
 over multiple lines"
 ```
-
-
-
-[2] using the index to get the character in a specific position 
-"Hello"[0] # to get the character at position 0 of the string 
-s = "Hello"
-print(s[0])
-
-[3] f-string
-use f-string to make a string with different data types variables inside 
-int_var = 0
-float_var = 2.3
-bool_var = True
-
-str_var = f"this has different types {int_var} and {float_var} and {bool_var}" 
-this is better than 
-str_var = "this has different types" + str(int_var) + "and" + ...
 
 [4] remove last n characters from a string
 my_str = my_str[:-1] # -1 for one char , -n for n characters
@@ -186,6 +168,13 @@ name2 = 'Sunny'
 print(f'Hello there {name1} and {name2}')       # Hello there Andrei and Sunny - Newer way to do things as of python 3.6
 print('Hello there {} and {}'.format(name1, name2))# Hello there Andrei and Sunny
 print('Hello there %s and %s' %(name1, name2))  # Hello there Andrei and Sunny --> you can also use %d, %f, %r for integers, floats, string representations of objects respectively
+
+# use f-string to make a string with different data types variables inside 
+int_var = 0
+float_var = 2.3
+bool_var = True
+
+str_var = f"this has different types {int_var} and {float_var} and {bool_var}"
 
 ## Most Important String Methods
 y = " This is lazy\t\n "
