@@ -97,6 +97,7 @@ If a string has to be broken into multiple lines, the backslash character \ can 
 if you want to replace characters in the string, you need to create another string and assign characters to it. 
 * single quotes vs double quotes: double quotes support string interpolation/formating with f or format function. single quote takes the string as literal
 
+#### creating a string
 ```
 user = "User Full Name"
 game = 'Monopoly'
@@ -105,46 +106,38 @@ longer = "This string is broken up \
 over multiple lines"
 ```
 
-[4] remove last n characters from a string
-my_str = my_str[:-1] # -1 for one char , -n for n characters
-
-[5] convert int to bin 
-'{0:08b}'.format(6) # this will format the int number 6 to bin and padding with 0s in 8 positions
-if this doesn't work, use f'{6:08b}'
-
-explaination:
-{} places a variable into a string
-0 takes the variable at argument position 0
-: adds formatting options for this variable (otherwise it would represent decimal 6)
-0 the character used for padding
-8 formats the number to eight digits zero-padded on the left
-b converts the number to its binary representation
-
-so no padding: f'{6:b}'
-
-[5.1] convert bin string to int 
-value = int(bString, 2)
-
-
-[9] replace a string/char
-song.replace('cold', 'hurt') # RETURNS A COPY, DOESN'T REPLACE IN PLACE
-
-[10] get the ascii char and ord of a character
-chr(ascii number) returns the char
-ord(char) returns the ordinal value of a char
-
-[11] check if alpha
-x = txt.isalpha() # returns bool
-
-[12] convert string to list
-x = list(string_val)
- 
-
+#### manipulating strings 
 
 ```
-## Indexing and Slicing
+# remove last n characters from a string
+my_str = my_str[:-1] # -1 for one char , -n for n characters
+
+# convert int to bin 
+'{0:08b}'.format(6) # this will format the int number 6 to bin and padding with 0s in 8 positions
+# if this doesn't work, use f'{6:08b}'
+# explaination:
+# {} places a variable into a string
+# 0 takes the variable at argument position 0
+# : adds formatting options for this variable (otherwise it would represent decimal 6)
+# 0 the character used for padding
+# 8 formats the number to eight digits zero-padded on the left
+# b converts the number to its binary representation
+# so no padding: f'{6:b}'
+
+# convert bin string to int 
+value = int(bString, 2)
+
+#Palindrome check
+word = 'reviver'
+p = bool(word.find(word[::-1]) + 1)
+print(p) # True
+```
+
+#### Indexing and Slicing
+```
 s = "The youngest pope was 11 years old"
 name = 'Andrei Neagoie'
+
 # indexing. indexing starts from 0
 print(s[0]) # 'T'
 print(s[1:3]) # 'he'
@@ -161,33 +154,39 @@ name[::1]   # Andrei Neagoie
 name[::-1]  # eiogaeN ierdnA
 name[0:10:2]# Ade e
 # : is called slicing and has the format [ start : end : step ]. the end is exclusive, means the end index value will not be included in the resulting string
+```
 
-# String Formatting
+#### String Formatting
+```
 name1 = 'Andrei'
 name2 = 'Sunny'
 print(f'Hello there {name1} and {name2}')       # Hello there Andrei and Sunny - Newer way to do things as of python 3.6
 print('Hello there {} and {}'.format(name1, name2))# Hello there Andrei and Sunny
 print('Hello there %s and %s' %(name1, name2))  # Hello there Andrei and Sunny --> you can also use %d, %f, %r for integers, floats, string representations of objects respectively
+```
 
-# use f-string to make a string with different data types variables inside 
+#### use f-string to make a string with different data types variables inside 
+```
 int_var = 0
 float_var = 2.3
 bool_var = True
 
 str_var = f"this has different types {int_var} and {float_var} and {bool_var}"
+```
 
-## Most Important String Methods
+#### Most Important String Methods
+```
 y = " This is lazy\t\n "
-print(','.join(["F", "B", "I"]))        # 'F,B,I'
-print(len("Rumpelstiltskin"))           # String length: 15
-print("ear" in "earth")                 # Contains: True
+print(','.join(["F", "B", "I"]))      # 'F,B,I'
+print(len("Rumpelstiltskin"))         # String length: 15
+print("ear" in "earth")               # Contains: True
 start, end = 1, 3
 '  I am alone '.strip()               # 'I am alone' --> Strips all whitespace characters from both ends. returns a copy not stripping in place
 'On an island'.strip('d')             # 'On an islan' --> # Strips all passed characters from both ends.
 'but life is good!'.split()           # ['but', 'life', 'is', 'good!']
 x = s.split() # creates string array of words
 print(x[-3] + " " + x[-1] + " " + x[2] + "s") # '11 old popes'
-'Help me'.replace('me', 'you')        # 'Help you' --> Replaces first with second param
+'Help me'.replace('me', 'you')        # 'Help you' --> Replaces first with second param. # RETURNS A COPY, DOESN'T REPLACE IN PLACE
 'Need to make fire'.startswith('Need')# True
 'and cook rice'.endswith('rice')      # True
 'bye bye'.index('e')                  # 2
@@ -198,14 +197,20 @@ c.islower()                           # checks if is lower
 'oh hi there'.find('i')               # 4 --> returns the starting index position of the first occurrence
 'oh hi there'.count('e')              # 2
 string.count('char or substring', start, end) # count how many times a char appears in a string
+x = txt.isalpha()                     # checks if all alpha returns bool
+chr(ascii number) # returns the char for the ascii number 
+ord(char)         # returns the ordinal value of a char
+x = list(string_val) # convert string to list 
 
 ## string concatenation is done by using +
 first = "Hello "
 second = "World"
 result = first + second
 long_result = first + second + "!"
+```
 
-## converting string to numbers. # input() always returns string
+#### converting string to numbers. # input() always returns string
+```
 age = input("How old are you?")
 age = int(age)
 pi = input("What is the value of pi?")
