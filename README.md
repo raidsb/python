@@ -23,6 +23,19 @@ refers to whther the state of an object can be changed after they are created or
 * Any operation that appears to modify an immutable object actually creates a new object with the modified state.
 * Examples of immutable objects in Python include integers, floats, strings, tuples, and frozensets.
 
+### type conversion/casting
+Type conversion and casting are related concepts in programming but can have different meanings depending on the context and the programming language:
+* Type Conversion (implicit change of type): It refers to changing the data type of a variable to another compatible type. In many programming languages, implicit type conversion (also known as type coercion) occurs automatically when performing operations between different types. For example, converting an integer to a floating-point number during arithmetic operations.
+* Casting (explicit change of type): Casting is a specific form of type conversion where a programmer explicitly converts a variable from one data type to another. It's a way to inform the compiler to treat a variable as a different type temporarily. In languages like C or C++, casting can be performed using specific syntax such as (type) variable (C-style cast) or static_cast<type>(variable) (C++ style cast).
+
+While casting is a form of type conversion, not all type conversions involve casting. Some conversions occur implicitly by the language itself, while casting explicitly instructs the compiler to perform the conversion.
+
+```
+# examples 
+str(int_var)   # convert int to string
+float(str_var) # convert str to float
+```
+
 ## importing libraries
 ### [1] importing multiple libraries
 can write the importing statements this way:
@@ -79,16 +92,22 @@ For Python 3.x, integers are dynamically allocated and can grow to accommodate a
 so there is only one type in python to house whole integer numbers. 
 In Python 2, there were two distinct integer types: int and long. However, in Python 3, these two types were unified, and the long type was removed. Now, all integers in Python 3 are of type int, and they automatically switch to arbitrary-precision representation when they exceed the platform's limit for fixed-size integers.
 
-##### [1.1] writing integer values using _
+#### writing integer values using _
+```
 a = 123_333_444 # integer numbers can be written 123_333_444 this is same as 123333444. this to make it easier to read
+```
 
-##### [1.2] convert int to bin '{0:08b}'.format(6) 
+#### convert int to bin '{0:08b}'.format(6) 
+```
 {} places a variable into a string
 0 takes the variable at argument position 0
 : adds formatting options for this variable (otherwise it would represent decimal 6)
 08 formats the number to eight digits zero-padded on the left
 b converts the number to its binary representation
+```
 
+### primitive datatypes - float
+* same as integer, can be written as 123_333.34 the _ to make it easier to read
 
 ### primitive datatype - String
 * A string is a sequence of characters (letters, numbers, whitespace or punctuation) enclosed by quotation marks single or double. 
@@ -163,10 +182,8 @@ name2 = 'Sunny'
 print(f'Hello there {name1} and {name2}')       # Hello there Andrei and Sunny - Newer way to do things as of python 3.6
 print('Hello there {} and {}'.format(name1, name2))# Hello there Andrei and Sunny
 print('Hello there %s and %s' %(name1, name2))  # Hello there Andrei and Sunny --> you can also use %d, %f, %r for integers, floats, string representations of objects respectively
-```
 
-#### use f-string to make a string with different data types variables inside 
-```
+## use f-string to make a string with different data types variables inside 
 int_var = 0
 float_var = 2.3
 bool_var = True
@@ -217,25 +234,7 @@ pi = input("What is the value of pi?")
 pi = float(pi)
 ```
 
-#### float 
-[1] same as integer, can be written as 123_333.34 the _ to make it easier to read
-
-# type() 
-used to check the type of a variable: type(var) 
-
-# type conversion/casting 
-Type conversion and casting are related concepts in programming but can have different meanings depending on the context and the programming language:
-
-Type Conversion (implicit change of type): It refers to changing the data type of a variable to another compatible type. In many programming languages, implicit type conversion (also known as type coercion) occurs automatically when performing operations between different types. For example, converting an integer to a floating-point number during arithmetic operations.
-
-Casting (explicit change of type): Casting is a specific form of type conversion where a programmer explicitly converts a variable from one data type to another. It's a way to inform the compiler to treat a variable as a different type temporarily. In languages like C or C++, casting can be performed using specific syntax such as (type) variable (C-style cast) or static_cast<type>(variable) (C++ style cast).
-
-While casting is a form of type conversion, not all type conversions involve casting. Some conversions occur implicitly by the language itself, while casting explicitly instructs the compiler to perform the conversion.
-
-- convert int to string: str(int_var)
-- convert str to float: float(str_var)
-
-#### Bool 
+### primitive datatype - Bool 
 
 ```
 x, y = True, False
@@ -246,168 +245,149 @@ if None or 0 or 0.0 or '' or [] or {} or set():
  # None, 0, 0.0, empty strings, or empty
  # container types are evaluated to False
  print("Dead code") # Not reached
+ 
+# all of the below evaluate to False. Everything else will evaluate to True in Python.
+print(bool(None))
+print(bool(False))
+print(bool(0))
+print(bool(0.0))
+print(bool([]))
+print(bool({}))
+print(bool(()))
+print(bool(''))
+print(bool(range(0)))
+print(bool(set()))
 ```
 
-# Input
-[1] what does it do? 
-use input(prompt) to get input from the user in the console. the value passed from the user will replace the 
-input(prompt) code line in the python script.
-
-example: using input() inside print()
--------------------------------------
-print("Hello " + input("Hi, what's your name?") ) # will execute the input first, and the value passed from the user will replace the input() call in the print function call.
-
-assign the input value to a variable 
-------------------------------------
-can also assign the input value to a variable: name = input('')
-
-the input value always returns string, so if getting a number should convert to int
------------------------------------------------------------------------------------
-num1 = int(input())
-num2 = int(input())
-print(num1 * num2)
-
-## Mathematical operations
-### [1] list of arithmetic operations
-+, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
-PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
+### built-in non-primitive datatype - Dictionary
 
 ```
-# Arithmetic
-10 + 3  # 13
-10 - 3  # 7
-10 * 3  # 30
-10 ** 3 # 1000
-10 / 3  # 3.3333333333333335
-10 // 3 # 3 --> floor division - no decimals and returns an int
-10 % 3  # 1 --> modulo operator - return the reminder. Good for deciding if number is even or odd
+# get list of keys
+keysList = list(mydict.keys())
 
-# exploring types returned by aritmetic operations
-a = 3
-b = 0.5
-c = 2
-
-print('a + b', type(a + b)) 
-print('a + c', type(a + c))
-print('a * b', type(a * b))
-print('a * c', type(a * c))
-print('a - b', type(a - b))
-print('a - c', type(a - c))
-print('a / b', type(a / b))
-print('a / c', type(a / c))
-print('a // b', type(a // b))
-print('a // c', type(a // c))
-print('a % b', type(a % b))
-print('a % c', type(a % c)) 
-
-# outputs
-"""
-a + b <class 'float'>
-a + c <class 'int'>
-a * b <class 'float'>
-a * c <class 'int'>
-a - b <class 'float'>
-a - c <class 'int'>
-a / b <class 'float'>
-a / c <class 'float'>
-a // b <class 'float'>
-a // c <class 'int'>
-a % b <class 'float'>
-a % c <class 'int'>
-"""
-
-# Mathematical functions
-pow(5, 2)      # 25 --> like doing 5**2
-abs(-50)       # 50
-round(5.46)    # 5
-round(5.468, 2)# 5.47 --> round to nth digit
-bin(512)       # '0b1000000000' -->  binary format
-hex(512)       # '0x200' --> hexadecimal format
-
-# types returned by mathematical functions determined by the input arguments
-print('pow(5, 2)', type(pow(5, 2)))      
-print('abs(-50)', type(abs(-50)))        
-print('round(5.46)', type(round(5.46)))         # returns int because the value is int
-print('round(5.468, 2)', type(round(5.468, 2))) # returns float because the value is float
-print('bin(512)', type(bin(512))) # returns string 
-print('hex(512)', type(hex(512))) # returns string
-
-# outputs
-pow(5, 2) <class 'int'>
-abs(-50) <class 'int'>
-round(5.46) <class 'int'>
-round(5.468, 2) <class 'float'>
-bin(512) <class 'str'>
-hex(512) <class 'str'>
-```
-
-### [1.1] num1 ^ num2 is the xor operation.  ^ is the xor operator
-
-### [1.2] add a value to an existing variable and assign the new value back to the same variable. 
-
-```
-# Plus-Equal Operator
-
-counter = 0
-counter += 10
-
-# This is equivalent to
-
-counter = 0
-counter = counter + 10
-
-# The operator will also perform string concatenation
-
-message = "Part 1 of message "
-message += "Part 2 of message"
-```
-
-### [1.3] get the log base 2 of a number 
-
-```
-math.log2(2.7183) 
-```
-
-### [2] math functions 
-
-```
-floor(float number) to truncate float numbers 
-```
-
-# Functions 
-def raw_file_names(self) -> str: 
-this means a function that returns a string. it is optional in python and is meant to make it more readable
-more details about -> type: -> str: This part is a type hint, indicating that the method is expected to return a value of type str (string). Type hints are optional in Python, but they can provide information to developers and tools about the expected types of function parameters and return values.
-
-# Reading csv files
-import csv
-with open(self.dataset_csv_file, 'r') as file:
-    csv_reader = csv.DictReader(file)
-    self.data_list = [row for row in csv_reader]
-
-# Dictionary
-[1] get list of keys
-keysList = list(mydict.keys()) 
-
-[2] check if key exists in keys
+# check if key exists in keys
 if key_to_check in my_dict.keys():
-
-# Lists
-
-## list functions and methods 
-
 ```
-x.sorted(x) # Return a sorted copy of the list e.g., [1,2,3]
-x.sort()    # Sorts the list in place (replaces x)
-reversed(x) # Reverse the order of elements in x e.g., [2,3,1]
-x.reverse() # Reverse the list in place 
+
+### built-in non-primitive datatype - Lists
+Unlike strings, lists are mutable sequences in python
+
+#### list indexing and slicing
+```
+my_list = [1, 2, '3', True]# We assume this list won't mutate for each example below
+# indexing. indexing starts with zero
+my_list.index('3')         # 2 returns the index of the first occurance
+my_list[3]                 # True
+my_list[-1]                # True
+
+# slicing. the end in slicing is exclusive. slicing returns a copy of the sliced list
+my_list[1:]                # [2, '3', True]
+my_list[:1]                # [1]
+my_list[::1]               # [1, 2, '3', True]
+my_list[::-1]              # [True, '3', 2, 1] # reversing
+my_list[0:3:2]             # [1, '3']
+
+# : is called slicing and has the format [ start : end : step ]
+```
+
+#### list functions and methods 
+```
 x.count()   # Count the number of element 2 in the list
-
+min([1,2,3,4,5])# 1
+max([1,2,3,4,5])# 5
+sum([1,2,3,4,5])# 15
 ```
 
+#### ordering list
+```
+len(my_list)               # 4
+my_list.count(2)           # 1 --> count how many times 2 appears
+x.sorted(x)                # Return a sorted copy of the list e.g., [1,2,3]
+sorted([1,2,5,3])          # [1, 2, 3, 5] --> new list created
+x.sort()                   # Sorts the list in place (replaces x)
+[1,2,5,3].sort()           # None --> Mutates list to [1, 2, 3, 5]
+[1,2,5,3].sort(reverse=True) # None --> Mutates list to [5, 3, 2, 1]
+reversed(x)                  # Reverse the order of elements in x e.g., [2,3,1]
+list(reversed([1,2,5,3]))    # [3, 5, 2, 1] --> reversed() returns an iterator
+x.reverse()                  # Reverse the list in place 
+[1,2,5,3].reverse()          # None --> Mutates list to [3, 5, 2, 1]
 ```
 
+#### list copying
 ```
+# Copy a List
+basket = ['apples', 'pears', 'oranges']
+new_basket = basket.copy()
+new_basket2 = basket[:]
+```
+
+#### removing from List
+```
+# Remove from List
+[1,2,3].pop()    # 3 --> mutates original list, default index in the pop method is -1 (the last item)
+[1,2,3].pop(1)   # 2 --> mutates original list
+[1,2,3].remove(2)# None --> [1,3] Removes first occurrence of item or raises ValueError.
+[1,2,3].clear()  # None --> mutates original list and removes all items: []
+del [1,2,3][0] # 
+```
+
+#### Useful operations - check if a member exists in a list
+```
+1 in [1,2,5,3]  # True
+```
+
+#### Useful operations - Get First and Last element of a list
+```
+mList = [63, 21, 30, 14, 35, 26, 77, 18, 49, 10]
+first, *x, last = mList
+print(first) #63
+print(last) #10
+```
+
+#### Useful operations - Matrix
+```
+matrix = [[1,2,3], [4,5,6], [7,8,9]]
+matrix[2][0] # 7 --> Grab first first of the third item in the matrix object
+```
+
+#### Useful operations - Looping through a matrix by rows
+```
+mx = [[1,2,3],[4,5,6]]
+for row in range(len(mx)):
+	for col in range(len(mx[0])):
+		print(mx[row][col]) # 1 2 3 4 5 6
+
+# Transform into a list:
+[mx[row][col] for row in range(len(mx)) for col in range(len(mx[0]))] # [1,2,3,4,5,6]
+
+# Combine columns with zip and *:
+[x for x in zip(*mx)] # [(1, 3), (2, 4)]
+```
+
+#### List Comprehensions
+```
+# new_list[<action> for <item> in <iterator> if <some condition>]
+a = [i for i in 'hello']                  # ['h', 'e', 'l', 'l', '0']
+b = [i*2 for i in [1,2,3]]                # [2, 4, 6]
+c = [i for i in range(0,10) if i % 2 == 0]# [0, 2, 4, 6, 8]
+```
+
+# Advanced Functions
+list_of_chars = list('Helloooo')                                   # ['H', 'e', 'l', 'l', 'o', 'o', 'o', 'o']
+sum_of_elements = sum([1,2,3,4,5])                                 # 15
+element_sum = [sum(pair) for pair in zip([1,2,3],[4,5,6])]         # [5, 7, 9]
+sorted_by_second = sorted(['hi','you','man'], key=lambda el: el[1])# ['man', 'hi', 'you']
+sorted_by_key = sorted([
+                       {'name': 'Bina', 'age': 30},
+                       {'name':'Andy', 'age': 18},
+                       {'name': 'Zoey', 'age': 55}],
+                       key=lambda el: (el['name']))# [{'name': 'Andy', 'age': 18}, {'name': 'Bina', 'age': 30}, {'name': 'Zoey', 'age': 55}]
+# Read line of a file into a list
+with open("myfile.txt") as f:
+  lines = [line.strip() for line in f]
+#---
+
+
 [1] create a list of length n init to 0s
  listofzeros = [0] * n 
  
@@ -556,7 +536,140 @@ list1 = list(set(ranked)) # returns a newly created list
 
 [18] top of the stack: list[-1]
 
-# using ranges
+## Mathematical operations
+### [1] list of arithmetic operations
++, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
+PEMDAS for precedency. if two operations at the same level, the one on the most left has higher precedency
+
+```
+# Arithmetic
+10 + 3  # 13
+10 - 3  # 7
+10 * 3  # 30
+10 ** 3 # 1000
+10 / 3  # 3.3333333333333335
+10 // 3 # 3 --> floor division - no decimals and returns an int
+10 % 3  # 1 --> modulo operator - return the reminder. Good for deciding if number is even or odd
+
+# exploring types returned by aritmetic operations
+a = 3
+b = 0.5
+c = 2
+
+print('a + b', type(a + b)) 
+print('a + c', type(a + c))
+print('a * b', type(a * b))
+print('a * c', type(a * c))
+print('a - b', type(a - b))
+print('a - c', type(a - c))
+print('a / b', type(a / b))
+print('a / c', type(a / c))
+print('a // b', type(a // b))
+print('a // c', type(a // c))
+print('a % b', type(a % b))
+print('a % c', type(a % c)) 
+
+# outputs
+"""
+a + b <class 'float'>
+a + c <class 'int'>
+a * b <class 'float'>
+a * c <class 'int'>
+a - b <class 'float'>
+a - c <class 'int'>
+a / b <class 'float'>
+a / c <class 'float'>
+a // b <class 'float'>
+a // c <class 'int'>
+a % b <class 'float'>
+a % c <class 'int'>
+"""
+
+# Mathematical functions
+pow(5, 2)           # 25 --> like doing 5**2
+abs(-50)            # 50
+round(5.46)         # 5
+round(5.468, 2)     # 5.47 --> round to nth digit
+floor(float number) # to truncate float numbers 
+bin(512)            # '0b1000000000' -->  binary format
+hex(512)            # '0x200' --> hexadecimal format
+
+# types returned by mathematical functions determined by the input arguments
+print('pow(5, 2)', type(pow(5, 2)))      
+print('abs(-50)', type(abs(-50)))        
+print('round(5.46)', type(round(5.46)))         # returns int because the value is int
+print('round(5.468, 2)', type(round(5.468, 2))) # returns float because the value is float
+print('bin(512)', type(bin(512))) # returns string 
+print('hex(512)', type(hex(512))) # returns string
+math.log2(2.7183)
+
+# outputs
+pow(5, 2) <class 'int'>
+abs(-50) <class 'int'>
+round(5.46) <class 'int'>
+round(5.468, 2) <class 'float'>
+bin(512) <class 'str'>
+hex(512) <class 'str'>
+```
+
+### num1 ^ num2 is the xor operation.  ^ is the xor operator
+
+### add a value to an existing variable and assign the new value back to the same variable. 
+
+```
+# Plus-Equal Operator
+
+counter = 0
+counter += 10
+
+# This is equivalent to
+counter = 0
+counter = counter + 10
+
+# The operator will also perform string concatenation
+message = "Part 1 of message "
+message += "Part 2 of message"
+```
+
+## Input
+what does it do? 
+use input(prompt) to get input from the user in the console. the value passed from the user will replace the input(prompt) code line in the python script.
+
+```
+# example: using input() inside print()
+print("Hello " + input("Hi, what's your name?") ) # will execute the input first, and the value passed from the user will replace the input() call in the print function call.
+
+# assign the input value to a variable 
+name = input('') # can also assign the input value to a variable
+```
+
+the input value always returns string, so if getting a number should convert to int
+```
+num1 = int(input())
+num2 = int(input())
+print(num1 * num2)
+```
+
+## Functions 
+
+```
+def raw_file_names(self) -> str:
+	return "just a dummy string"
+# this means a function that returns a string. it is optional in python and is meant to make it more readable
+# more details about -> type: -> str: This part is a type hint, indicating that the method is expected to return a value of type str (string). Type hints are optional in Python, but they can provide information to developers and tools about the expected types of function parameters and return values.
+```
+
+## Reading csv files
+
+```
+import csv
+with open(self.dataset_csv_file, 'r') as file:
+    csv_reader = csv.DictReader(file)
+    self.data_list = [row for row in csv_reader]
+```
+
+
+## using ranges
 [1] use range in iterating 
 rule of thumb:
 for i in range(start, stop, step)
@@ -565,7 +678,7 @@ for i in range(1, n, 2) iterate from 1 to n-1, with step is two
 for i in range(4, 0, -2) iterating backward from 4 to 0 with step is two (negative is backward)
 for i in revered(range(0, 4, 2)) same as above using the reversed
 
-# Enums 
+## Enums 
 [1] define enums
 from enum import Enum 
 
@@ -578,7 +691,7 @@ Links
 -----
 [1] libs: https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/   
 
-# OOP 
+## OOP 
 [1] list of oop features 
 Object-oriented programming (OOP) is a programming paradigm that organizes software design around objects and their interactions. OOP provides several features and capabilities that help in designing and implementing robust, modular, and maintainable software systems. Here are the key features and capabilities of OOP:
 
@@ -627,7 +740,7 @@ Object-oriented programming (OOP) is a programming paradigm that organizes softw
 
 These features and capabilities of OOP help in designing modular, maintainable, and extensible software systems by promoting concepts such as encapsulation, inheritance, and polymorphism. By using OOP principles effectively, developers can create code that is easier to understand, modify, and extend.
 
-# Algorithms 
+## Algorithms 
 [1] arrays 
 
 [1.1] arrays problems where math operations are needed on the left vs the right of each element in the array. use a single loop to iterate over each element and make the operations left vs right, 
