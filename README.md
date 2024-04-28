@@ -56,7 +56,7 @@ Tuple     , allows duplicates       , immutable, ordered
 set       , doesn't allow duplicates, immutable, not orderded  
 Dictionary, doesn't allow duplicates, mutable  , orderded only for python >= 3.7
 
-## checking the type of an object
+### checking the type of an object
 
 ```
 a = 10
@@ -96,6 +96,7 @@ b converts the number to its binary representation
 If a string has to be broken into multiple lines, the backslash character \ can be used to indicate that the string continues on the next line.
 * 'str' object does not support item assignment. because strings are immutable, so can't change their characters in-place.
 if you want to replace characters in the string, you need to create another string and assign characters to it. 
+* single quotes vs double quotes: double quotes support string interpolation/formating with f or format function. single quote takes the string as literal
 
 ```
 user = "User Full Name"
@@ -105,14 +106,7 @@ longer = "This string is broken up \
 over multiple lines"
 ```
 
-### [1] string concatenation is done by '+'
 
-```
-
-```
-
-[1] single quotes vs double quotes: double quotes support string interpolation/formating with f or format function.
-- single quote takes the string as literal
 
 [2] using the index to get the character in a specific position 
 "Hello"[0] # to get the character at position 0 of the string 
@@ -150,10 +144,6 @@ so no padding: f'{6:b}'
 value = int(bString, 2)
 
 
-
-[8] check if is lower 
-c.islower()
-
 [9] replace a string/char
 song.replace('cold', 'hurt') # RETURNS A COPY, DOESN'T REPLACE IN PLACE
 
@@ -172,26 +162,52 @@ x = list(string_val)
 ```
 ## Indexing and Slicing
 s = "The youngest pope was 11 years old"
+name = 'Andrei Neagoie'
+# indexing. indexing starts from 0
 print(s[0]) # 'T'
 print(s[1:3]) # 'he'
 print(s[-3:-1]) # 'ol'
 print(s[-3:]) # 'old'
-x = s.split() # creates string array of words
-print(x[-3] + " " + x[-1] + " " + x[2] + "s") # '11 old popes'
+name[4]     # e
+
+# slicing
+name[:]     # the whole string "Andrei Neagoie"
+name[1:]    # ndrei Neagoie
+name[:1]    # A
+name[-1]    # e
+name[::1]   # Andrei Neagoie
+name[::-1]  # eiogaeN ierdnA
+name[0:10:2]# Ade e
+# : is called slicing and has the format [ start : end : step ]. the end is exclusive, means the end index value will not be included in the resulting string
+
+# String Formatting
+name1 = 'Andrei'
+name2 = 'Sunny'
+print(f'Hello there {name1} and {name2}')       # Hello there Andrei and Sunny - Newer way to do things as of python 3.6
+print('Hello there {} and {}'.format(name1, name2))# Hello there Andrei and Sunny
+print('Hello there %s and %s' %(name1, name2))  # Hello there Andrei and Sunny --> you can also use %d, %f, %r for integers, floats, string representations of objects respectively
 
 ## Most Important String Methods
 y = " This is lazy\t\n "
-print(y.strip())                        # Remove Whitespace: 'This is lazy'
-print("DrDre".lower())                  # Lowercase: 'drdre'
-print("attention".upper())              # Uppercase: 'ATTENTION'
-print("smartphone".startswith("smart")) # True
-print("smartphone".endswith("phone"))   # True
-print("another".find("other"))          # Match index: 2
-print("cheat".replace("ch", "m"))       # 'meat'
 print(','.join(["F", "B", "I"]))        # 'F,B,I'
 print(len("Rumpelstiltskin"))           # String length: 15
 print("ear" in "earth")                 # Contains: True
 start, end = 1, 3
+'  I am alone '.strip()               # 'I am alone' --> Strips all whitespace characters from both ends. returns a copy not stripping in place
+'On an island'.strip('d')             # 'On an islan' --> # Strips all passed characters from both ends.
+'but life is good!'.split()           # ['but', 'life', 'is', 'good!']
+x = s.split() # creates string array of words
+print(x[-3] + " " + x[-1] + " " + x[2] + "s") # '11 old popes'
+'Help me'.replace('me', 'you')        # 'Help you' --> Replaces first with second param
+'Need to make fire'.startswith('Need')# True
+'and cook rice'.endswith('rice')      # True
+'bye bye'.index('e')                  # 2
+'still there?'.upper()                # STILL THERE?
+'HELLO?!'.lower()                     # hello?!
+c.islower()                           # checks if is lower
+'ok, I am done.'.capitalize()         # 'Ok, I am done.'
+'oh hi there'.find('i')               # 4 --> returns the starting index position of the first occurrence
+'oh hi there'.count('e')              # 2
 string.count('char or substring', start, end) # count how many times a char appears in a string
 
 ## string concatenation is done by using +
