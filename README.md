@@ -688,6 +688,39 @@ list1 = list(set(ranked)) # returns a newly created list
 
 [18] top of the stack: list[-1]
 
+## built-in non-primitive datatype - Dictionary
+```
+my_dict = {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False}
+my_dict['name']                      # Andrei Neagoie
+len(my_dict)                         # 3
+list(my_dict.keys())                 # ['name', 'age', 'magic_power'] - it returns a dynamic view object. it shows the changes in real-time
+list(my_dict.values())               # ['Andrei Neagoie', 30, False]
+list(my_dict.items())                # [('name', 'Andrei Neagoie'), ('age', 30), ('magic_power', False)]
+my_dict['favourite_snack'] = 'Grapes'# {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False, 'favourite_snack': 'Grapes'}
+my_dict.get('age')                   # 30 --> Returns None if key does not exist.
+my_dict.get('ages', 0 )              # 0 --> Returns default (2nd param) if key is not found
+
+#Remove key
+del my_dict['name']       # removes the key and corresponding value
+my_dict.pop('name', None) # removes the key and corresponding value and return the popped key-value. if not exists returns None
+
+# Updating Dictionary can be done in two using, using the update method and direct assin. 
+# Use update when you want to add or update multiple values. or depends on your preference.
+my_dict.update({'cool': True})                     # {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False, 'favourite_snack': 'Grapes', 'cool': True}
+my_dict.update({'cool': True, 'hobby': 'reading'}) # update can be used to update multiple entries
+my_dict['cool'] = True. # using the assign
+
+# mergins dictionaries. will merge and create a new dictionary. if same key, the last key value will be used. original ones will not change
+merged_dict = {**my_dict, **{'cool': True} }                           # {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False, 'favourite_snack': 'Grapes', 'cool': True}
+new_dict = dict([['name','Andrei'],['age',32],['magic_power',False]])  # Creates a dict from collection of key-value pairs.
+new_dict = dict(zip(['name','age','magic_power'],['Andrei',32, False]))# Creates a dict from two collections.
+new_dict = my_dict.pop('favourite_snack')                              # Removes item from dictionary.
+
+# dictionary comprehension
+# Dictionary Comprehension
+comp_dict = {key: value for key, value in new_dict.items() if key == 'age' or key == 'name'} # {'name': 'Andrei', 'age': 32} --> Filter dict by keys
+```
+
 ## Mathematical operations
 ### [1] list of arithmetic operations
 +, - , / , *, ** for exponent operation, // for full number div returns int not float, % for mod division
