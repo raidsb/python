@@ -334,7 +334,7 @@ my_list = [1, 2, '3', True]# We assume this list won't mutate for each example b
 # indexing. indexing starts with zero
 my_list.index('3')         # 2 returns the index of the first occurance
 my_list[3]                 # True
-my_list[-1]                # True
+my_list[-1]                # True - top of the stack if list used as a stack
 
 # slicing. the end in slicing is exclusive. slicing returns a copy of the sliced list
 my_list[1:]                # [2, '3', True]
@@ -342,6 +342,9 @@ my_list[:1]                # [1]
 my_list[::1]               # [1, 2, '3', True]
 my_list[::-1]              # [True, '3', 2, 1] # reversing
 my_list[0:3:2]             # [1, '3']
+
+# get sum of a slice of a list
+s = sum(test_list[x: x + 3])
 
 # : is called slicing and has the format [ start : end : step ]
 ```
@@ -549,8 +552,7 @@ with open("myfile.txt") as f:
 [2.1] using itertools slicing 
 itertools.islice(test_list, i, i + 3) # check what does this return 
 
-[3] get sum of a list
-sum(test_list[x: x + 3])
+
 
 [4] map function is used to apply a function on each element in a list. 
 for example: 
@@ -671,9 +673,6 @@ print(x)
 [11] counting elements in a list
 list.count(element)
 
-[12] find index of element in list
-index = animals.index('dog') 
-
 [13] adding item to end of list:
 ranked.append(score) # this adds in place. so returns None and the original list is modified.
 
@@ -719,6 +718,84 @@ new_dict = my_dict.pop('favourite_snack')                              # Removes
 # dictionary comprehension
 # Dictionary Comprehension
 comp_dict = {key: value for key, value in new_dict.items() if key == 'age' or key == 'name'} # {'name': 'Andrei', 'age': 32} --> Filter dict by keys
+
+# iterating dictionary with items
+for k,v in my_dict.items(): # Dictionary Unpacking
+    print(k) # 'a', 'b', 'c'
+    print(v) # 1, 2, 3
+```
+
+## built-in non-primitive datatypes - tuples
+```
+my_tuple = ('apple','grapes','mango', 'grapes') # tuples allow duplicates
+apple, grapes, mango, grapes = my_tuple# Tuple unpacking
+apple, *fruits, grapes = my_tuple      # extended unpacking
+len(my_tuple)                          # 4
+my_tuple[2]                            # mango
+my_tuple[-1]                           # 'grapes'
+```
+
+### Tuples are not mutable
+```
+# Immutability
+my_tuple[1] = 'donuts'  # TypeError
+my_tuple.append('candy')# AttributeError
+```
+
+### Methods
+```
+# Methods
+my_tuple.index('grapes') # 1
+my_tuple.count('grapes') # 2
+```
+
+### Zip
+```
+list(zip([1,2,3], [4,5,6])) # [(1, 4), (2, 5), (3, 6)]
+
+# unzip
+z = [(1, 2), (3, 4), (5, 6), (7, 8)] # Some output of zip() function
+unzip = lambda z: list(zip(*z))
+unzip(z) # --> returns the original
+```
+
+## built-in non-primitive datatype - sets
+Creating and adding
+```
+my_set = set()
+my_set.add(1)  # {1}
+my_set.add(100)# {1, 100}
+my_set.add(100)# {1, 100} --> no duplicates!
+```
+
+Deleting elements
+```
+new_list = [1,2,3,3,3,4,4,5,6,1]
+set(new_list)           # {1, 2, 3, 4, 5, 6}
+
+my_set.remove(100)      # {1} --> Raises KeyError if element not found
+my_set.discard(100)     # {1} --> removes but Doesn't raise an error if element not found
+my_set.clear()          # {}
+new_set = {1,2,3}.copy()# {1,2,3}
+```
+
+sets operations 
+```
+set1 = {1,2,3}
+set2 = {3,4,5}
+set3 = set1.union(set2)               # {1,2,3,4,5}
+set4 = set1.intersection(set2)        # {3}
+set5 = set1.difference(set2)          # {1, 2}
+set6 = set1.symmetric_difference(set2)# {1, 2, 4, 5}
+set1.issubset(set2)                   # False
+set1.issuperset(set2)                 # False
+set1.isdisjoint(set2)                 # False --> return True if two sets have a null intersection.
+```
+Frozen set
+```
+# Frozenset
+# hashable --> it can be used as a key in a dictionary or as an element in a set.
+<frozenset> = frozenset(<collection>)
 ```
 
 ## Mathematical operations
@@ -835,6 +912,15 @@ num2 = int(input())
 print(num1 * num2)
 ```
 
+Using input to let the user quit
+```
+# waiting until user quits
+msg = ''
+while msg != 'quit':
+    msg = input("What should I do?")
+    print(msg)
+```
+
 ## Functions 
 
 ```
@@ -853,15 +939,23 @@ with open(self.dataset_csv_file, 'r') as file:
     self.data_list = [row for row in csv_reader]
 ```
 
-
 ## using ranges
-[1] use range in iterating 
-rule of thumb:
-for i in range(start, stop, step)
+```
+# rule of thumb: for i in range(start, stop, step)
 for i in range(n): # n is not inclusive, so this will iterate from 0 to n-1
 for i in range(1, n, 2) iterate from 1 to n-1, with step is two
 for i in range(4, 0, -2) iterating backward from 4 to 0 with step is two (negative is backward)
 for i in revered(range(0, 4, 2)) same as above using the reversed
+
+range(10)          # range(0, 10) --> 0 to 9
+range(1,10)        # range(1, 10)
+list(range(0,10,2))# [0, 2, 4, 6, 8]
+```
+## Enumerate
+```
+for i, el in enumerate('helloo'):
+  print(f'{i}, {el}')
+```
 
 ## Enums 
 [1] define enums
@@ -871,6 +965,14 @@ class Color(Enum):
 RED = 1
 GREEN = 2
 BLUE = 3 
+
+## Counter 
+```
+from collections import Counter
+colors = ['red', 'blue', 'yellow', 'blue', 'red', 'blue']
+counter = Counter(colors)# Counter({'blue': 3, 'red': 2, 'yellow': 1})
+counter.most_common()[0] # ('blue', 3)
+```
 
 Links
 -----
