@@ -272,6 +272,62 @@ if key_to_check in my_dict.keys():
 ### built-in non-primitive datatype - Lists
 Unlike strings, lists are mutable sequences in python
 
+#### adding to the List
+```
+my_list = [1, 2, '3', True]
+new_list = my_list * 2                # [1, 2, '3', True, 1, 2, '3', True] does not mutate the original list, it creates a new one.
+my_list + [100]            # [1, 2, '3', True, 100] --> doesn't mutate original list, creates new one
+my_list.append(100)        # None --> Mutates original list to [1, 2, '3', True, 100]          # Or: <list> += [<el>]
+# my_list.extend(<iterable>) # so extend can be used to extend the original list with list, string, tuple, set
+my_list.extend([100, 200]) # None --> Mutates original list to [1, 2, '3', True, 100, 200] - extend with list
+my_list.extend("str")      # None --> Mutates original list to [1, 2. '3', True, 's', 't', 'r'] - extend with string 
+my_list.extend(("tup1", "tup2")) # None --> Mutates original list to [1, 2, '3', True, "tup1", "tup2"] - extend with tuple
+my_list.extend({3, 'False', 6})  # None --> Mutates original list to [1, 2, '3', True, 3, 'False', 6]
+my_list.insert(2, '!!!')   # None -->  [1, 2, '!!!', '3', True] - Inserts item at index and moves the rest to the right.
+
+' '.join(['Hello','There'])# 'Hello There' --> Joins elements using string as separator.
+```
+
+#### list copying
+```
+# Copy a List
+basket = ['apples', 'pears', 'oranges']
+new_basket = basket.copy() # this is a shallow copy. it creates a new object but the nested objects will be copied as references. changes in the copy is also change in the original
+new_basket2 = basket[:]
+
+## Shallow copy example.
+import copy
+# Original list with nested list
+original_list = [[1, 2, 3], [4, 5, 6]]
+
+# Shallow copy of the original list
+shallow_copied_list = copy.copy(original_list)
+
+# Modify the nested list in the shallow copied list
+shallow_copied_list[0][0] = 100
+
+# Both the original and shallow copied lists are affected
+print(original_list)          # Output: [[100, 2, 3], [4, 5, 6]]
+print(shallow_copied_list)    # Output: [[100, 2, 3], [4, 5, 6]]
+
+## deep copy create entirely new object. so a change in the copy will not not change in the original
+import copy
+# Original list with nested list
+original_list = [[1, 2, 3], [4, 5, 6]]
+
+# Deep copy of the original list
+deep_copied_list = copy.deepcopy(original_list)
+
+# Modify the nested list in the deep copied list
+deep_copied_list[0][0] = 100
+
+# Only the deep copied list is affected
+print(original_list)        # Output: [[1, 2, 3], [4, 5, 6]]
+print(deep_copied_list)     # Output: [[100, 2, 3], [4, 5, 6]]
+
+
+```
+
 #### list indexing and slicing
 ```
 my_list = [1, 2, '3', True]# We assume this list won't mutate for each example below
@@ -302,33 +358,49 @@ sum([1,2,3,4,5])# 15
 ```
 len(my_list)               # 4
 my_list.count(2)           # 1 --> count how many times 2 appears
-x.sorted(x)                # Return a sorted copy of the list e.g., [1,2,3]
+sorted(x)                  # Return a sorted copy of the list e.g., [1,2,3]
 sorted([1,2,5,3])          # [1, 2, 3, 5] --> new list created
 x.sort()                   # Sorts the list in place (replaces x)
 [1,2,5,3].sort()           # None --> Mutates list to [1, 2, 3, 5]
 [1,2,5,3].sort(reverse=True) # None --> Mutates list to [5, 3, 2, 1]
-reversed(x)                  # Reverse the order of elements in x e.g., [2,3,1]
-list(reversed([1,2,5,3]))    # [3, 5, 2, 1] --> reversed() returns an iterator
-x.reverse()                  # Reverse the list in place 
+reversed(x)                  # Reverse the order of elements in x e.g., [2,3,1]. it returns an iterator not a list. so need to convert the iterator to list.
+							 # it is made this way because it is more memory-efficient and most operations on reverse requires just iterating the elements in reverse order, not a list of reversed elements.
+list(reversed([1,2,5,3]))    # [3, 5, 2, 1] --> reversed() returns an iterator so you have to convert to list
+x.reverse()                  # Reverse the list in place
 [1,2,5,3].reverse()          # None --> Mutates list to [3, 5, 2, 1]
-```
-
-#### list copying
-```
-# Copy a List
-basket = ['apples', 'pears', 'oranges']
-new_basket = basket.copy()
-new_basket2 = basket[:]
 ```
 
 #### removing from List
 ```
 # Remove from List
-[1,2,3].pop()    # 3 --> mutates original list, default index in the pop method is -1 (the last item)
-[1,2,3].pop(1)   # 2 --> mutates original list
+# pop removes by index and returns the removed value.
+[1,2,3].pop()    # removes 3 and returns the removed value. good for stack --> mutates original list, default index in the pop method is -1 (the last item)
+[1,2,3].pop(1)   # removes 2 and returns the removed value. --> mutates original list
+
+# remove removes by value. the first occurance will be removed.
 [1,2,3].remove(2)# None --> [1,3] Removes first occurrence of item or raises ValueError.
+
 [1,2,3].clear()  # None --> mutates original list and removes all items: []
-del [1,2,3][0] # 
+
+# del is similar to pop but it doesn't return anything.
+del [1,2,3][0] # returns nothing. just deletes.
+```
+
+#### List Comprehensions
+```
+# new_list[<action> for <item> in <iterator> if <some condition>]
+a = [i for i in 'hello']                  # ['h', 'e', 'l', 'l', '0']
+b = [i*2 for i in [1,2,3]]                # [2, 4, 6]
+c = [i for i in range(0,10) if i % 2 == 0]# [0, 2, 4, 6, 8]
+```
+
+#### Functions
+```
+# converting string to list of chars
+list_of_chars = list('Helloooo')                                   # ['H', 'e', 'l', 'l', 'o', 'o', 'o', 'o']
+
+# getting the sum of a list.
+sum_of_elements = sum([1,2,3,4,5])                                 # 15
 ```
 
 #### Useful operations - check if a member exists in a list
@@ -339,15 +411,38 @@ del [1,2,3][0] #
 #### Useful operations - Get First and Last element of a list
 ```
 mList = [63, 21, 30, 14, 35, 26, 77, 18, 49, 10]
-first, *x, last = mList
-print(first) #63
-print(last) #10
+first, *x, last = mList # *x is called extended unpacking. which will unpack the list and assign to x. 
+print(first) # 63
+print(x)     # [21, 30, 14, 35, 26, 77, 18, 49]
+print(last)  # 10
+
+# another example of extended unpacking
+list = [21, 30, 14, 35, 26, 77, 18, 49]
+first, *x, last = list
+print(first) # 21
+print(x)     # [30, 14, 35, 26, 77, 18]
+print(last)  # 49
+*x, last = list
+print(x)     # [21, 30, 14, 35, 26, 77, 18]
+print(last)  49
 ```
 
 #### Useful operations - Matrix
 ```
 matrix = [[1,2,3], [4,5,6], [7,8,9]]
 matrix[2][0] # 7 --> Grab first first of the third item in the matrix object
+
+# Looping through a matrix by rows:
+mx = [[1,2,3],[4,5,6]]
+for row in range(len(mx)):
+	for col in range(len(mx[0])):
+		print(mx[row][col]) # 1 2 3 4 5 6
+
+# Transform into a list:
+[mx[row][col] for row in range(len(mx)) for col in range(len(mx[0]))] # [1,2,3,4,5,6]
+
+# Combine columns with zip and *:
+[x for x in zip(*mx)] # returns [(1, 4), (2, 5), (3, 6)]
 ```
 
 #### Useful operations - Looping through a matrix by rows
@@ -362,37 +457,94 @@ for row in range(len(mx)):
 
 # Combine columns with zip and *:
 [x for x in zip(*mx)] # [(1, 3), (2, 4)]
+mx = [(1, 4), (2, 5), (3, 6)]
+
+result1 = [x for x in zip(*mx)]  # Transpose mx. here we have two iterables to pair between them. and pairs each element in unpacked element with corresponding element from the other unpacked.
+result2 = [x for x in zip(mx)]   # Pair up elements from mx. we have only one iterable, the list itself, so nothing to pair with it.
+
+print(result1)  # Output: [(1, 2, 3), (4, 5, 6)]
+print(result2)  # Output: [((1, 4),), ((2, 5),), ((3, 6),)]
 ```
 
-#### List Comprehensions
+#### Useful operations - Using zip to pair corresponding elements in multiple iterables.
 ```
-# new_list[<action> for <item> in <iterator> if <some condition>]
-a = [i for i in 'hello']                  # ['h', 'e', 'l', 'l', '0']
-b = [i*2 for i in [1,2,3]]                # [2, 4, 6]
-c = [i for i in range(0,10) if i % 2 == 0]# [0, 2, 4, 6, 8]
-```
+### using zip to pair and compute sum per column
+# zip function creates pairs of corresponding elements in a group of lists. 
+list_pair = [sum(pair) for pair in zip([1, 2, 3], [4, 5, 6], [7, 8, 9])]   # if lists are not of the same length, the shortest length will be used to create the pairs
+list_pair = [sum(pair) for pair in zip([[1, 2, 3], [4, 5, 6], [7, 8, 9])]] # --> will give error. because one iterable, nothing to pair and calculate the sum with. works the same.
 
-# Advanced Functions
-list_of_chars = list('Helloooo')                                   # ['H', 'e', 'l', 'l', 'o', 'o', 'o', 'o']
-sum_of_elements = sum([1,2,3,4,5])                                 # 15
+# getting the sum of each colum using zip. zip creates pairs of corresponding elements in the list
 element_sum = [sum(pair) for pair in zip([1,2,3],[4,5,6])]         # [5, 7, 9]
+```
+
+#### Useful operations - sorting per key 
+In sorted(iterable, key=function) key is used specify a function that will be called on each element of the iterable being sorted. The return value of this function will be used to determine the sort order of the elements.
+the function takes only one argument which is the element from the iterable.
+
+several forms of functions can be used in key. function, method in a class, build-in function, partial function, lambda
+```
+### sorting per key
+## key is a lambda  function.
+
+# example1 - sorting a list using the second character of each string
 sorted_by_second = sorted(['hi','you','man'], key=lambda el: el[1])# ['man', 'hi', 'you']
+
+# example2 - sorting a list of dicts according to the name
 sorted_by_key = sorted([
                        {'name': 'Bina', 'age': 30},
                        {'name':'Andy', 'age': 18},
                        {'name': 'Zoey', 'age': 55}],
                        key=lambda el: (el['name']))# [{'name': 'Andy', 'age': 18}, {'name': 'Bina', 'age': 30}, {'name': 'Zoey', 'age': 55}]
-# Read line of a file into a list
+
+list_dict = [
+    {"name": "Ahmad", "score": 10},
+    {"name": "samar", "score": 4},
+    {"name": "sameera", "score": 7},
+    {"name": "ayham", "score": 8},
+    {"name": "omar", "score": 9},
+]
+
+## below are different ways of using the key function, but the lambda is the most common
+# way 1: sorting with key function is lambda
+new_list_1 = sorted(list_dict, key=lambda x: x["name"])
+print(new_list_1) # [{'name': 'Ahmad', 'score': 10}, {'name': 'ayham', 'score': 8}, {'name': 'omar', 'score': 9}, {'name': 'samar', 'score': 4}, {'name': 'sameera', 'score': 7}]
+
+# way 2: sorting with a function
+def sort_by_name(x):
+    return x["name"]
+
+new_list_2 = sorted(list_dict, key=sort_by_name)
+print(new_list_2)
+
+# way 3: sorting with a built-in function
+new_list_3 = sorted(list_dict, key=len)
+print(new_list_3)
+
+# way 4: sorting with a class method
+class Person:
+    def sort_by_score(self, person):
+        return person['score']
+
+person_ins = Person()
+sorted_list_4 = sorted(list_dict, key=person_ins.sort_by_score)
+print(sorted_list_4)
+
+# way 5: sorting with a partial function
+from functools import partial
+
+def subtract(a, b):
+    return a - b
+number = [1, 2, 3, 4, 5]
+subtract_by_5 = partial(subtract, b=5)
+sorted_by_difference = sorted(numbers, key=subtract_by_5)
+```
+
+#### Useful operations - Read line of a file into a list
+```
 with open("myfile.txt") as f:
   lines = [line.strip() for line in f]
-#---
+```
 
-
-[1] create a list of length n init to 0s
- listofzeros = [0] * n 
- 
-[2] get a sectional subset of a list ------------> slicing 
-section = test_list[x: x + 3] # starts with index x to index x+3 but like range, the last element is not inclusive, means it includes elements from x to x + 2 not x + 3
 
 [2.1] using itertools slicing 
 itertools.islice(test_list, i, i + 3) # check what does this return 
