@@ -725,6 +725,34 @@ for k,v in my_dict.items(): # Dictionary Unpacking
     print(v) # 1, 2, 3
 ```
 
+## built-in non-primitive datatype - ordered dictionary
+An OrderedDict in Python is a dictionary subclass that remembers the order in which its items were inserted. 
+It maintains a predictable iteration order, unlike a standard dictionary, which does not guarantee any specific 
+order when iterating over its elements. Here are some scenarios in which you might consider using an OrderedDict:
+
+* Preserving Insertion Order: If you need to preserve the order in which items were added to a dictionary and iterate over them in that order, an OrderedDict is a suitable choice. This can be useful in scenarios where the order of insertion is significant, such as processing configuration files or maintaining a log of events.
+* Creating Ordered Data Structures: If you need to create data structures with a specific order, an OrderedDict can be used to ensure that items are stored and accessed in a predictable manner. For example, you might use an OrderedDict to represent ordered lists, stacks, or queues in your application.
+* Implementing LRU Cache: An OrderedDict can be used to implement a simple Least Recently Used (LRU) cache, where the least recently accessed items are evicted from the cache when it reaches a certain size. By using an OrderedDict to store the cached items, you can ensure that the items are ordered based on their access frequency, with the least recently accessed items at the beginning of the dictionary.
+* Serializing Data: When serializing data to formats like JSON or XML, the order of elements may be important for readability or compatibility with other systems. In such cases, using an OrderedDict to represent the data ensures that the serialized output maintains the same order as the original data structure.
+* Working with APIs or Protocols: Some APIs or protocols may require data to be transmitted or processed in a specific order. Using an OrderedDict to organize the data before sending it over the network or passing it to external systems can help ensure compatibility and interoperability.
+
+Overall, an OrderedDict is useful when you need to maintain the order of items in a dictionary and ensure predictable iteration order. 
+It provides a convenient way to work with ordered data structures and can be particularly valuable in scenarios where the order of elements is important for correctness or compatibility.
+
+```
+from collections import OrderedDict
+# Store each person's languages, keeping # track of who responded first. 
+programmers = OrderedDict()
+programmers['Tim'] = ['python', 'javascript']
+programmers['Sarah'] = ['C++']
+programmers['Bia'] = ['Ruby', 'Python', 'Go']
+
+for name, langs in programmers.items():
+    print(name + '-->')
+    for lang in langs:
+      print('\t' + lang)
+```
+
 ## built-in non-primitive datatypes - tuples
 ```
 my_tuple = ('apple','grapes','mango', 'grapes') # tuples allow duplicates
@@ -757,6 +785,41 @@ list(zip([1,2,3], [4,5,6])) # [(1, 4), (2, 5), (3, 6)]
 z = [(1, 2), (3, 4), (5, 6), (7, 8)] # Some output of zip() function
 unzip = lambda z: list(zip(*z))
 unzip(z) # --> returns the original
+```
+
+## built-in non-primitive datatype - named tuples
+Commonly used in scenarios where you have a collection of data with a fixed number of fields and you want to access the elements by name rather than by index. 
+They are particularly useful for representing small, fixed-size records or data structures, such as database records, CSV rows, or function return values, where the position of each element has meaning.
+
+Some common use cases for namedtuples include:
+* Data Aggregation: Storing and accessing structured data in a concise and readable format.
+* Function Return Values: Returning multiple values from a function in a more descriptive manner.
+* Configuration Options: Storing configuration parameters or settings in a named and accessible format.
+* API Responses: Parsing and working with data retrieved from APIs or web services.
+* Database Records: Representing rows from a database query result in a more structured way.
+* Overall, namedtuples provide a lightweight and intuitive way to work with structured data in Python, offering the convenience of accessing elements by name while retaining the immutability and efficiency of tuples.
+
+```
+from collections import namedtuple
+Point = namedtuple('Point', 'x y')
+
+# creating a named tuple
+p = Point(1, y=2)# Point(x=1, y=2)
+
+# accessing members of named tuple
+p[0]             # 1
+p.x              # 1
+getattr(p, 'y')  # 2
+p._fields        # Or: Point._fields #('x', 'y')
+```
+
+Another example
+```
+from collections import namedtuple
+Person = namedtuple('Person', 'name height')
+person = Person('Jean-Luc', 187)
+f'{person.height}'           # '187'
+'{p.height}'.format(p=person)# '187'
 ```
 
 ## built-in non-primitive datatype - sets
@@ -923,11 +986,238 @@ while msg != 'quit':
 
 ## Functions 
 
+"->" in the function header is a hint of the return type
 ```
 def raw_file_names(self) -> str:
 	return "just a dummy string"
 # this means a function that returns a string. it is optional in python and is meant to make it more readable
 # more details about -> type: -> str: This part is a type hint, indicating that the method is expected to return a value of type str (string). Type hints are optional in Python, but they can provide information to developers and tools about the expected types of function parameters and return values.
+```
+
+* *args and **kwargs
+Splat (*) expands a collection into positional arguments, while splatty-splat (**) expands a dictionary into keyword arguments.
+```
+args   = (1, 2)
+kwargs = {'x': 3, 'y': 4, 'z': 5}
+some_func(*args, **kwargs) # same as some_func(1, 2, x=3, y=4, z=5)
+```
+
+* * Inside Function Definition
+Splat combines zero or more positional arguments into a tuple, while splatty-splat combines zero or more keyword arguments into a dictionary.
+```
+def add(*a):
+    return sum(a)
+
+add(1, 2, 3) # 6
+
+def f(*args):                  # f(1, 2, 3)
+def f(x, *args):               # f(1, 2, 3)
+def f(*args, z):               # f(1, 2, z=3)
+def f(x, *args, z):            # f(1, 2, z=3)
+
+def f(**kwargs):               # f(x=1, y=2, z=3)
+def f(x, **kwargs):            # f(x=1, y=2, z=3) | f(1, y=2, z=3)
+
+def f(*args, **kwargs):        # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3) | f(1, 2, 3)
+def f(x, *args, **kwargs):     # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3) | f(1, 2, 3)
+def f(*args, y, **kwargs):     # f(x=1, y=2, z=3) | f(1, y=2, z=3)
+def f(x, *args, z, **kwargs):  # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3)
+```
+
+Other Uses of * 
+```
+[*[1,2,3], *[4]]                # [1, 2, 3, 4]
+{*[1,2,3], *[4]}                # {1, 2, 3, 4}
+(*[1,2,3], *[4])                # (1, 2, 3, 4)
+{**{'a': 1, 'b': 2}, **{'c': 3}}# {'a': 1, 'b': 2, 'c': 3}
+head, *body, tail = [1,2,3,4,5]
+```
+
+## lambda
+```
+# lambda: <return_value>
+# lambda <argument1>, <argument2>: <return_value>
+```
+
+Example using lambda in factorial
+```
+# Factorial
+from functools import reduce
+n = 3
+factorial = reduce(lambda x, y: x*y, range(1, n+1))
+print(factorial) #6
+```
+
+Example using lambda in fibbonaci (recursive call)
+```
+# Fibonacci
+fib = lambda n : n if n <= 1 else fib(n-1) + fib(n-2)
+result = fib(10)
+print(result) #55
+```
+
+## Comprehension
+```
+<list> = [i+1 for i in range(10)]         # [1, 2, ..., 10]
+<set>  = {i for i in range(10) if i > 5}  # {6, 7, 8, 9}
+<iter> = (i+5 for i in range(10))         # (5, 6, ..., 14)
+<dict> = {i: i*2 for i in range(10)}      # {0: 0, 1: 2, ..., 9: 18}
+```
+
+```
+output = [i+j for i in range(3) for j in range(3)] # [0, 1, 2, 1, 2, 3, 2, 3, 4]
+
+# Is the same as:
+output = []
+for i in range(3):
+  for j in range(3):
+    output.append(i+j)
+```
+
+## Ternary condition
+```
+# <expression_if_true> if <condition> else <expression_if_false>
+
+[a if a else 'zero' for a in [0, 1, 0, 3]] # ['zero', 1, 'zero', 3]
+```
+
+## Map Filter Reduce
+```
+from functools import reduce
+list(map(lambda x: x + 1, range(10)))            # [1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+list(filter(lambda x: x > 5, range(10)))         # (6, 7, 8, 9)
+reduce(lambda acc, x: acc + x, range(10))        # 45
+```
+
+## Closures functions 
+We have a closure in Python when:
+
+A nested function references a value of its enclosing function and then
+the enclosing function returns the nested function.
+```
+def get_multiplier(a):
+    def out(b):
+        return a * b
+    return out
+	
+>>> multiply_by_3 = get_multiplier(3)
+>>> multiply_by_3(10)
+30
+```
+If multiple nested functions within enclosing function reference the same value, that value gets shared.
+To dynamically access function's first free variable use '<function>.__closure__[0].cell_contents'.
+
+## Scope, non-local, global
+If variable is being assigned to anywhere in the scope, it is regarded as a local variable, unless it is declared as a 'global' or a 'nonlocal 
+Note: nonlocal keyword is not the same as the global keyword. While both keywords are used to access variables outside the current scope, they have different purposes and behaviors:
+
+* nonlocal keyword: The nonlocal keyword is used to declare that a variable in an enclosed scope (such as a nested function) should be treated as a variable from the nearest enclosing scope that is not global. It allows you to modify variables in the nearest enclosing scope (typically the scope of a containing function) from within an inner function. nonlocal is primarily used in nested functions where you want to modify variables in an enclosing scope without affecting global variables.
+```
+def get_counter():
+    i = 0
+    def out():
+        nonlocal i
+        i += 1
+        return i
+    return out
+```
+
+```
+>>> counter = get_counter()
+>>> counter(), counter(), counter()
+(1, 2, 3)
+```
+
+* global keyword: The global keyword is used to declare that a variable inside a function should refer to a global variable with the same name, rather than creating a new local variable.
+It allows you to access and modify global variables from within a function.
+global is typically used when you want to modify global variables from within a function, although it's generally considered better practice to avoid using global variables whenever possible.
+
+```
+x = 10
+def func():
+    global x
+    x = 20
+func()
+print(x)  # Output: 20
+```
+
+## Modules
+```
+if __name__ == '__main__': # Runs main() if file wasn't imported.
+    main()
+```
+
+```
+import <module_name>
+from <module_name> import <function_name>
+import <module_name> as m
+from <module_name> import <function_name> as m_function
+from <module_name> import *
+```
+
+## Generators
+Generators in Python are functions that enable the creation of iterators. 
+They allow you to generate a sequence of values over time, rather than computing them all at once and storing them in memory. 
+Generators are implemented using the yield keyword and provide a convenient way to work with large datasets or infinite sequences.
+
+Here are some key points about generators:
+* Lazy Evaluation: Generators use lazy evaluation, meaning that they generate values on-the-fly as they are requested, rather than computing and storing all values in memory at once. This makes them memory-efficient, especially for generating large or infinite sequences.
+* Iterable Protocol: Generators implement the iterable protocol, which means they can be used in loops and comprehensions, just like other iterable objects such as lists or tuples.
+* yield Keyword: Generators are defined using the def keyword like regular functions, but instead of using return to return a value, they use the yield keyword to yield a value to the caller. When a generator function is called, it returns a generator object, which can be iterated over to yield values.
+* Stateful: Generators maintain their state between successive calls, allowing them to resume execution from where they left off. This makes them particularly useful for tasks that involve maintaining state or performing iterative computations.
+Example:
+```
+def countdown(n):
+    while n > 0:
+        yield n
+        n -= 1
+
+# Create a generator object
+gen = countdown(5)
+
+# Iterate over the generator to yield values
+for value in gen:
+    print(value)  # Output: 5, 4, 3, 2, 1
+```
+* Generator Expressions: Python also provides generator expressions, which are similar to list comprehensions but use parentheses instead of square brackets. Generator expressions are more memory-efficient than list comprehensions because they generate values lazily.
+Generators are commonly used in Python for tasks such as reading large files line by line, generating sequences of numbers, or processing data in chunks without loading it all into memory at once. They provide a powerful and efficient way to work with sequences of values in a memory-conscious manner.
+
+```
+def count(start, step):
+    while True:
+        yield start
+        start += step
+
+>>> counter = count(10, 2)
+>>> next(counter), next(counter), next(counter)
+(10, 12, 14)
+```
+
+## Decorators 
+A decorator takes a function, adds some functionality and returns it.
+
+debuggers example:
+```
+from functools import wraps
+
+def debug(func):
+    @wraps(func)
+    def out(*args, **kwargs):
+        print(func.__name__)
+        return func(*args, **kwargs)
+    return out
+
+@debug
+def add(x, y):
+    return x + y
+```
+Wraps is a helper decorator that copies metadata of function add() to function out().
+Without it 'add.__name__' would return 'out'.
+
+## Any All
+```
+any([False, True, False])# True if at least one item in collection is truthy, False if empty.
+all([True,1,3,True])     # True if all items in collection are true
 ```
 
 ## Reading csv files
@@ -973,6 +1263,150 @@ colors = ['red', 'blue', 'yellow', 'blue', 'red', 'blue']
 counter = Counter(colors)# Counter({'blue': 3, 'red': 2, 'yellow': 1})
 counter.most_common()[0] # ('blue', 3)
 ```
+
+## OOP 
+
+### class
+User defined objects are created using the class keyword
+```
+class <name>:
+    age = 80 # Class Object Attribute
+    def __init__(self, a):
+        self.a = a # Object Attribute
+
+    @classmethod
+    def get_class_name(cls):
+        return cls.__name__
+```
+
+### Instance method vs class method vs static method
+Methods within a class can be categorized into three main types based on how they interact with the instance and class itself: 
+
+* Instance Methods:
+** Instance methods are the most common type of method in Python classes.
+** They are defined within a class and take an instance of the class (usually named self) as the first parameter.
+** Instance methods have access to the instance's attributes and can modify them.
+** They are typically used to operate on instance-specific data and behavior.
+
+Example:
+```
+class MyClass:
+    def instance_method(self):
+        return self.attribute
+```
+
+an instance can access both class and static methods directly
+```
+class MyClass:
+    @classmethod
+    def class_method(cls):
+        return f"This is a class method of {cls.__name__}"
+
+# Accessing class method through the class name
+print(MyClass.class_method())  # Output: This is a class method of MyClass
+
+# Accessing class method through an instance
+instance = MyClass()
+print(instance.class_method())  # Output: This is a class method of MyClass
+```
+
+```
+class MyClass:
+    @staticmethod
+    def static_method():
+        return "This is a static method"
+
+# Accessing static method through the class name
+print(MyClass.static_method())  # Output: This is a static method
+
+# Accessing static method through an instance
+instance = MyClass()
+print(instance.static_method())  # Output: This is a static method
+```
+
+Class methods can be accessed through instances because Python automatically passes the class as the first argument (cls) when you call a class method through an instance.
+Even though the class is passed as an implicit argument, you can still access the class method through the instance, and the method behaves as if it were called through the class itself.
+
+Static methods do not receive any implicit arguments (neither self nor cls), so they are essentially just regular functions defined within the class namespace.
+Instances can access static methods directly because they are part of the class definition and can be accessed through the class itself or through instances.
+
+* Class Methods:
+** Class methods are decorated with @classmethod.
+** They take a reference to the class (usually named cls) as the first parameter, instead of an instance.
+** Class methods have access to the class itself and its attributes.
+** They can be used to modify class-level variables or perform operations that involve the class itself. 
+** Class methods are often used as alternative constructors or to provide utility functions related to the class.
+
+Example:
+```
+class MyClass:
+    class_variable = 10
+    
+    @classmethod
+    def class_method(cls):
+        return cls.class_variable
+```
+
+Example of using class method as a different constructor:
+```
+class MyClass:
+    def __init__(self, value):
+        self.value = value
+    
+    @classmethod
+    def from_string(cls, string):
+        # Parse the string and create an instance
+        return cls(int(string)) # This part calls the class constructor with the integer value obtained from int(string). By using cls, we can call the class constructor without explicitly referring to the class name. This allows the method to work even if the class name is changed later.
+
+## calling it 
+# Call the class method to create a new instance
+my_instance = MyClass.from_string("10")
+print(my_instance.value)  # Output: 10
+```
+
+a class method can access an instance members only through an instance passed to the class method, not directly from the same instance.
+Yes, a class method in Python can access instance members, but it requires an instance of the class to access them.
+Inside a class method, the first parameter conventionally named cls refers to the class itself, not an instance. However, by convention, the first parameter in an instance method is named self, and it refers to the instance of the class. Therefore, to access instance members from within a class method, you would need to pass an instance to the class method and use that instance to access its members.
+```
+class MyClass:
+    def __init__(self, value):
+        self.value = value
+    
+    @classmethod
+    def class_method(cls, instance):
+        # Access instance member using the instance
+        return instance.value
+
+# Create an instance of MyClass
+my_instance = MyClass(10)
+
+# Call the class method and pass the instance
+result = MyClass.class_method(my_instance)
+
+# Output the result
+print(result)  # Output: 10
+
+```
+
+
+* Static Methods:
+** Static methods are decorated with @staticmethod.
+** They do not take any reference to the instance or class as parameters.
+** Static methods are similar to regular functions defined outside the class, but they are included within the class for organizational purposes.
+** They cannot access or modify instance or class attributes directly.
+** Static methods are often used for utility functions that do not depend on instance or class state.
+Example:
+```
+class MyClass:
+    @staticmethod
+    def static_method():
+        return "This is a static method"
+```
+Each method type serves different purposes and has its own use cases. Instance methods are used for operations specific to instances of the class, class methods for operations related to the class itself, and static methods for utility functions that do not depend on instance or class state.
+
+### Inheritance 
+
+* Multiple Inheritance
 
 Links
 -----
