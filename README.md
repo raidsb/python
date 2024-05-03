@@ -10,6 +10,13 @@ https://realpython.com/
 https://blog.finxter.com/ 
 https://www.datacamp.com/cheat-sheet
 https://www.geeksforgeeks.org/ - https://www.geeksforgeeks.org/python-cheat-sheet/ 
+https://zerotomastery.io/cheatsheets/python-cheat-sheet/ 
+
+## learning data science
+https://www.kdnuggets.com/free-python-resources-that-can-help-you-become-a-pro 
+https://oli.cmu.edu/courses/principles-of-computation-with-python-open-free/ 
+https://www.freecodecamp.org/learn/data-analysis-with-python/
+https://www.kdnuggets.com/2022/09/free-python-data-science-course.html
 
 ## libraries
 https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/    
@@ -43,6 +50,30 @@ While casting is a form of type conversion, not all type conversions involve cas
 str(int_var)   # convert int to string
 float(str_var) # convert str to float
 ```
+### collection vs sequence vs iterable vs iterator
+Understanding the distinctions between collection, iterable, iterator, and sequence is fundamental to grasping the behavior and characteristics of data structures and objects in Python:
+
+* Collection:
+A collection refers to any data structure or object that can hold multiple elements or values.
+Collections can be mutable (allowing modifications after creation) or immutable (fixed once created).
+Examples of collections include lists, tuples, sets, dictionaries, and user-defined classes that implement container-like behavior.
+
+* Iterable:
+An iterable is any object in Python that can be iterated over, meaning it can be used in a for loop or passed to functions like sum(), min(), or max() that expect iterables.
+Iterables include sequences (lists, tuples, strings), collections (sets, dictionaries), generators, and any object that implements the __iter__() method, which returns an iterator.
+Iterables can be traversed from start to end, but they do not necessarily have a fixed order or indexing.
+
+* Iterator:
+An iterator is an object that represents a stream of data and supports iteration.
+Iterators have two primary methods: __iter__() and __next__(). The __iter__() method returns the iterator object itself, while __next__() returns the next item in the stream or raises a StopIteration exception when the end of the stream is reached.
+Iterators maintain state and can be advanced using the __next__() method, making them suitable for lazy evaluation and processing of large or infinite data streams.
+Examples of iterators in Python include generator objects, file objects, and objects returned by the iter() function.
+
+* Sequence:
+A sequence is a specific type of iterable that represents an ordered collection of items, indexed by integers.
+Sequences support indexing, slicing, concatenation, repetition, and membership testing.
+Examples of sequences in Python include lists, tuples, strings, and byte arrays.
+Sequences guarantee order and allow duplicate elements, distinguishing them from other types of iterables that may not have a defined order or support indexing.
 
 ## importing libraries
 ### [1] importing multiple libraries
