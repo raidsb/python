@@ -3,11 +3,18 @@
 ## styling documentation (python enhancement proposal) 
 https://peps.python.org/pep-0008/ 
 
-## resources 
+## resources
+https://docs.python.org/3/ 
 https://realpython.com/ 
 https://blog.finxter.com/ 
 https://www.datacamp.com/cheat-sheet
 https://www.geeksforgeeks.org/ - https://www.geeksforgeeks.org/python-cheat-sheet/ 
+
+## libraries
+https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/    
+
+## pytest
+https://mathspp.com/blog/til/better-test-parametrisation-in-pytest 
 
 ## Concepts:
 ### mutable vs immutable
@@ -1266,6 +1273,55 @@ counter.most_common()[0] # ('blue', 3)
 
 ## OOP 
 
+### List of OOP features
+list of oop features 
+Object-oriented programming (OOP) is a programming paradigm that organizes software design around objects and their interactions. OOP provides several features and capabilities that help in designing and implementing robust, modular, and maintainable software systems. Here are the key features and capabilities of OOP:
+
+*    Class and Object:
+        Class: A blueprint for creating objects. It defines the properties (attributes) and behaviors (methods) that objects of the class will have.
+        Object: An instance of a class. It represents a real-world entity and encapsulates data and behavior.
+
+*    Encapsulation:
+        Encapsulation refers to the bundling of data (attributes) and methods that operate on the data into a single unit (i.e., class).
+        It hides the internal state of an object and restricts direct access to it, allowing access only through well-defined interfaces (public methods).
+
+*    Inheritance:
+        Inheritance is a mechanism by which a class (subclass/derived class) can inherit properties and behaviors from another class (superclass/base class).
+        It promotes code reusability, as subclasses can extend or override the functionality of their superclass.
+
+*    Polymorphism:
+        Polymorphism allows objects of different classes to be treated as objects of a common superclass.
+        It enables a single interface to represent multiple underlying data types or forms.
+        Two common forms of polymorphism are:
+            Compile-time polymorphism (method overloading): Methods with the same name but different parameters in the same class.
+            Run-time polymorphism (method overriding): Overriding a method in a subclass with a specific implementation.
+
+*    Abstraction:
+        Abstraction involves hiding the complex implementation details of a class and exposing only the essential features (i.e., what an object does rather than how it does it).
+        It allows developers to focus on high-level design without worrying about implementation details.
+
+*    Association, Aggregation, and Composition:
+        Association: Represents a relationship between two or more classes where each class has its own lifecycle and there is no ownership.
+        Aggregation: Represents a "has-a" relationship between classes, where one class is a part of another class.
+        Composition: Represents a strong "has-a" relationship between classes, where one class owns another class and is responsible for its lifecycle.
+
+*    Message Passing:
+        Objects communicate with each other by sending messages. A message typically consists of a method invocation along with any required arguments.
+
+*    Constructor and Destructor:
+        Constructor: A special method called when an object of a class is created. It initializes the object's state.
+        Destructor: A special method called when an object is destroyed. It performs cleanup tasks before the object is deallocated from memory.
+
+*    Access Modifiers:
+        Access modifiers control the visibility and accessibility of class members (attributes and methods).
+        Common access modifiers include public, private, and protected, which determine whether members can be accessed from outside the class.
+
+*    Overloading and Overriding:
+        Overloading: Defining multiple methods in a class with the same name but different parameter lists.
+        Overriding: Providing a new implementation for a method in a subclass that already exists in its superclass.
+
+These features and capabilities of OOP help in designing modular, maintainable, and extensible software systems by promoting concepts such as encapsulation, inheritance, and polymorphism. By using OOP principles effectively, developers can create code that is easier to understand, modify, and extend.
+
 ### class
 User defined objects are created using the class keyword
 ```
@@ -1366,7 +1422,13 @@ print(my_instance.value)  # Output: 10
 
 a class method can access an instance members only through an instance passed to the class method, not directly from the same instance.
 Yes, a class method in Python can access instance members, but it requires an instance of the class to access them.
-Inside a class method, the first parameter conventionally named cls refers to the class itself, not an instance. However, by convention, the first parameter in an instance method is named self, and it refers to the instance of the class. Therefore, to access instance members from within a class method, you would need to pass an instance to the class method and use that instance to access its members.
+Inside a class method, the first parameter conventionally named cls refers to the class itself, not an instance. 
+However, by convention, the first parameter in an instance method is named self, and it refers to the instance of the class. Therefore, to access instance members from within a class method, you would need to pass an instance to the class method and use that instance to access its members.
+
+a class method can access static methods: Accessing Static Methods:
+Static methods are defined within the class and can be accessed directly through the class itself.
+Since static methods do not depend on instance-specific or class-specific data, they can be called without an instance or the class name.
+
 ```
 class MyClass:
     def __init__(self, value):
@@ -1388,6 +1450,19 @@ print(result)  # Output: 10
 
 ```
 
+```
+class MyClass:
+    @staticmethod
+    def static_method():
+        return "This is a static method"
+
+    @classmethod
+    def class_method(cls):
+        # Access static method directly
+        return cls.static_method()
+
+print(MyClass.class_method())  # Output: This is a static method
+```
 
 * Static Methods:
 ** Static methods are decorated with @staticmethod.
@@ -1395,6 +1470,7 @@ print(result)  # Output: 10
 ** Static methods are similar to regular functions defined outside the class, but they are included within the class for organizational purposes.
 ** They cannot access or modify instance or class attributes directly.
 ** Static methods are often used for utility functions that do not depend on instance or class state.
+
 Example:
 ```
 class MyClass:
@@ -1402,72 +1478,283 @@ class MyClass:
     def static_method():
         return "This is a static method"
 ```
-Each method type serves different purposes and has its own use cases. Instance methods are used for operations specific to instances of the class, class methods for operations related to the class itself, and static methods for utility functions that do not depend on instance or class state.
+Each method type serves different purposes and has its own use cases. 
+Instance methods are used for operations specific to instances of the class, 
+class methods for operations related to the class itself, 
+and static methods for utility functions that do not depend on instance or class state.
+
+static methods can access class or instance methods indirectly
+```
+class MyClass:
+    def instance_method(self):
+        return "This is an instance method"
+
+    @classmethod
+    def class_method(cls):
+        return "This is a class method"
+
+    @staticmethod
+    def static_method():
+        # Static method cannot directly access instance method or class method
+        # Instead, you can call them using instances or the class itself
+        instance = MyClass()
+        instance_result = instance.instance_method()
+
+        class_result = MyClass.class_method()
+
+        return f"Static method result: {instance_result}, {class_result}"
+
+# Call the static method
+print(MyClass.static_method())
+```
+
+static method can take instances as parameters 
+```
+class MyClass:
+    @staticmethod
+    def static_method(instance):
+        return f"This is a static method called with instance {instance}"
+
+# Create an instance of MyClass
+my_instance = MyClass()
+
+# Call the static method with the instance as an argument
+result = MyClass.static_method(my_instance)
+
+# Output the result
+print(result)  # Output: This is a static method called with instance <__main__.MyClass object at 0x...>
+```
 
 ### Inheritance 
 
 * Multiple Inheritance
 
-Links
------
-[1] libs: https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/   
+## Exceptions 
+Example
+```
+try:
+  5/0
+except ZeroDivisionError:
+  print("No division by zero!")
+```
 
-## OOP 
-[1] list of oop features 
-Object-oriented programming (OOP) is a programming paradigm that organizes software design around objects and their interactions. OOP provides several features and capabilities that help in designing and implementing robust, modular, and maintainable software systems. Here are the key features and capabilities of OOP:
+```
+while True:
+  try:
+    x = int(input('Enter your age: '))
+  except ValueError:
+    print('Oops!  That was no valid number.  Try again...')
+  else: # code that depends on the try block running successfully should be placed in the else block.
+    print('Carry on!')
+    break
+```
 
-    Class and Object:
-        Class: A blueprint for creating objects. It defines the properties (attributes) and behaviors (methods) that objects of the class will have.
-        Object: An instance of a class. It represents a real-world entity and encapsulates data and behavior.
+## Files 
+```
+<file> = open('<path>', mode='r', encoding=None)
+```
 
-    Encapsulation:
-        Encapsulation refers to the bundling of data (attributes) and methods that operate on the data into a single unit (i.e., class).
-        It hides the internal state of an object and restricts direct access to it, allowing access only through well-defined interfaces (public methods).
+Modes
+'r' - Read (default).
+'w' - Write (truncate).
+'x' - Write or fail if the file already exists.
+'a' - Append.
+'w+' - Read and write (truncate).
+'r+' - Read and write from the start.
+'a+' - Read and write from the end.
+'t' - Text mode (default).
+'b' - Binary mode.
 
-    Inheritance:
-        Inheritance is a mechanism by which a class (subclass/derived class) can inherit properties and behaviors from another class (superclass/base class).
-        It promotes code reusability, as subclasses can extend or override the functionality of their superclass.
+```
+<file>.seek(0)                      # Moves to the start of the file.
 
-    Polymorphism:
-        Polymorphism allows objects of different classes to be treated as objects of a common superclass.
-        It enables a single interface to represent multiple underlying data types or forms.
-        Two common forms of polymorphism are:
-            Compile-time polymorphism (method overloading): Methods with the same name but different parameters in the same class.
-            Run-time polymorphism (method overriding): Overriding a method in a subclass with a specific implementation.
+<str/bytes> = <file>.readline()     # Returns a line.
+<list>      = <file>.readlines()    # Returns a list of lines.
 
-    Abstraction:
-        Abstraction involves hiding the complex implementation details of a class and exposing only the essential features (i.e., what an object does rather than how it does it).
-        It allows developers to focus on high-level design without worrying about implementation details.
+<file>.write(<str/bytes>)           # Writes a string or bytes object.
+<file>.writelines(<list>)           # Writes a list of strings or bytes objects.
+```
 
-    Association, Aggregation, and Composition:
-        Association: Represents a relationship between two or more classes where each class has its own lifecycle and there is no ownership.
-        Aggregation: Represents a "has-a" relationship between classes, where one class is a part of another class.
-        Composition: Represents a strong "has-a" relationship between classes, where one class owns another class and is responsible for its lifecycle.
+Methods do not add or strip trailing newlines.
+```
+# Read Text from File
+def read_file(filename):
+    with open(filename, encoding='utf-8') as file:
+        return file.readlines() # or read()
 
-    Message Passing:
-        Objects communicate with each other by sending messages. A message typically consists of a method invocation along with any required arguments.
+for line in read_file(filename):
+  print(line)
+```
 
-    Constructor and Destructor:
-        Constructor: A special method called when an object of a class is created. It initializes the object's state.
-        Destructor: A special method called when an object is destroyed. It performs cleanup tasks before the object is deallocated from memory.
+writing to a File
+```
+def write_to_file(filename, text):
+    with open(filename, 'w', encoding='utf-8') as file:
+        file.write(text)
+```
 
-    Access Modifiers:
-        Access modifiers control the visibility and accessibility of class members (attributes and methods).
-        Common access modifiers include public, private, and protected, which determine whether members can be accessed from outside the class.
+append to text File
+```
+def append_to_file(filename, text):
+    with open(filename, 'a', encoding='utf-8') as file:
+        file.write(text)
+```
 
-    Overloading and Overriding:
-        Overloading: Defining multiple methods in a class with the same name but different parameter lists.
-        Overriding: Providing a new implementation for a method in a subclass that already exists in its superclass.
+## CSV File
+```
+import csv
 
-These features and capabilities of OOP help in designing modular, maintainable, and extensible software systems by promoting concepts such as encapsulation, inheritance, and polymorphism. By using OOP principles effectively, developers can create code that is easier to understand, modify, and extend.
+#Read Rows from CSV File
+def read_csv_file(filename):
+    with open(filename, encoding='utf-8') as file:
+        return csv.reader(file, delimiter=';')
+		
+#Write Rows to CSV File
+def write_to_csv_file(filename, rows):
+    with open(filename, 'w', encoding='utf-8') as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerows(rows)
+```
+
+## JSON
+```
+import json
+<str>    = json.dumps(<object>, ensure_ascii=True, indent=None)
+<object> = json.loads(<str>)
+
+# Read Object from JSON File
+def read_json_file(filename):
+    with open(filename, encoding='utf-8') as file:
+        return json.load(file)
+
+# Write Object to JSON File
+def write_to_json_file(filename, an_object):
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(an_object, file, ensure_ascii=False, indent=2)
+		
+
+```
+
+## Pickle
+```
+# Pickle
+import pickle
+<bytes>  = pickle.dumps(<object>)
+<object> = pickle.loads(<bytes>)
+
+# Read Object from File
+def read_pickle_file(filename):
+    with open(filename, 'rb') as file:
+        return pickle.load(file)
+
+# Write Object to File
+def write_to_pickle_file(filename, an_object):
+    with open(filename, 'wb') as file:
+        pickle.dump(an_object, file)
+```
+
+## Profile
+### Basic
+```
+from time import time
+start_time = time()  # Seconds since
+...
+duration = time() - start_time
+```
+
+###Math
+```
+from math import e, pi
+from math import cos, acos, sin, asin, tan, atan, degrees, radians
+from math import log, log10, log2
+from math import inf, nan, isinf, isnan
+```
+
+### Statistics
+```
+from statistics import mean, median, variance, pvariance, pstdev
+```
+
+### Random
+```
+from random import random, randint, choice, shuffle
+random() # random float between 0 and 1
+randint(0, 100) # random integer between 0 and 100
+random_el = choice([1,2,3,4]) # select a random element from list
+shuffle([1,2,3,4]) # shuffles a list
+```
+
+### Datetime
+Module 'datetime' provides 'date' <D>, 'time' <T>, 'datetime' <DT> and 'timedelta' <TD> classes. All are immutable and hashable.
+Time and datetime can be 'aware' <a>, meaning they have defined timezone, or 'naive' <n>, meaning they don't.
+If object is naive it is presumed to be in system's timezone.
+
+```
+from datetime import date, time, datetime, timedelta
+from dateutil.tz import UTC, tzlocal, gettz
+
+# Constructors
+<D>  = date(year, month, day)
+<T>  = time(hour=0, minute=0, second=0, microsecond=0, tzinfo=None, fold=0)
+<DT> = datetime(year, month, day, hour=0, minute=0, second=0, ...)
+<TD> = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0,
+                 minutes=0, hours=0, weeks=0)
+```
+Use '<D/DT>.weekday()' to get the day of the week (Mon == 0).
+'fold=1' means second pass in case of time jumping back for one hour.
+
+Now
+```
+<D/DTn>  = D/DT.today()                     # Current local date or naive datetime.
+<DTn>    = DT.utcnow()                      # Naive datetime from current UTC time.
+<DTa>    = DT.now(<tz>)                     # Aware datetime from current tz time.
+```
+
+Timezone
+```
+<tz>     = UTC                              # UTC timezone.
+<tz>     = tzlocal()                        # Local timezone.
+<tz>     = gettz('<Cont.>/<City>')          # Timezone from 'Continent/City_Name' str.
+<DTa>    = <DT>.astimezone(<tz>)            # Datetime, converted to passed timezone.
+<Ta/DTa> = <T/DT>.replace(tzinfo=<tz>)      # Unconverted object with new timezone.
+```
+
+### Regex
+```
+import re
+<str>   = re.sub(<regex>, new, text, count=0)  # Substitutes all occurrences.
+<list>  = re.findall(<regex>, text)            # Returns all occurrences.
+<list>  = re.split(<regex>, text, maxsplit=0)  # Use brackets in regex to keep the matches.
+<Match> = re.search(<regex>, text)             # Searches for first occurrence of pattern.
+<Match> = re.match(<regex>, text)              # Searches only at the beginning of the text.
+```
+
+Match Object
+```
+<str>   = <Match>.group()   # Whole match.
+<str>   = <Match>.group(1)  # Part in first bracket.
+<tuple> = <Match>.groups()  # All bracketed parts.
+<int>   = <Match>.start()   # Start index of a match.
+<int>   = <Match>.end()     # Exclusive end index of a match.
+```
+
+Special Sequences
+```
+# Expressions below hold true for strings that contain only ASCII characters. Use capital letters for negation.
+
+'\d' == '[0-9]'          # Digit
+'\s' == '[ \t\n\r\f\v]'  # Whitespace
+'\w' == '[a-zA-Z0-9_]'   # Alphanumeric
+```
 
 ## Algorithms 
-[1] arrays 
+### arrays 
 
-[1.1] arrays problems where math operations are needed on the left vs the right of each element in the array. use a single loop to iterate over each element and make the operations left vs right, 
+* arrays problems where math operations are needed on the left vs the right of each element in the array. use a single loop to iterate over each element and make the operations left vs right, 
 example "Sherlock and array" problem 
 
-[2] the binary search
+* the binary search
+```
 def binary_search(scores, alice_score):
     low = 0
     high = len(scores) - 1
@@ -1492,9 +1779,10 @@ print("Alice's score would be at position:", position)
 
 
 S[:Index] + S[Index + 1:]
+```
 
 -------------------------------------------------------
-
+## Multi-threading
 give an example of multi-threading in python 
 ChatGPT
 Sure, here's a simple example of multi-threading in Python using the threading module:
