@@ -4,7 +4,8 @@
 https://peps.python.org/pep-0008/ 
 
 ## resources
-https://docs.python.org/3/ 
+https://docs.python.org/3/ # python language specification
+https://peps.python.org/pep-0008/ # styling guidelines
 https://realpython.com/ 
 https://blog.finxter.com/ 
 https://www.datacamp.com/cheat-sheet
