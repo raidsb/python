@@ -1,18 +1,18 @@
 # python
 
-## styling documentation (python enhancement proposal) 
-https://peps.python.org/pep-0008/ 
+## referece resources
+https://docs.python.org/3/        # python language specification
+https://peps.python.org/pep-0008/ # styling documentation (python enhancement proposal)
 
-## resources
-https://docs.python.org/3/ # python language specification
-https://peps.python.org/pep-0008/ # styling guidelines
-https://realpython.com/ 
-https://blog.finxter.com/ 
+## Learning resources
+https://zerotomastery.io/cheatsheets/python-cheat-sheet/  # Done
+https://realpython.com/
+https://blog.finxter.com/
 https://www.datacamp.com/cheat-sheet
 https://www.geeksforgeeks.org/ - https://www.geeksforgeeks.org/python-cheat-sheet/ 
-https://zerotomastery.io/cheatsheets/python-cheat-sheet/ 
 
-## learning data science
+
+## learning resources - data science
 https://www.kdnuggets.com/free-python-resources-that-can-help-you-become-a-pro 
 https://oli.cmu.edu/courses/principles-of-computation-with-python-open-free/ 
 https://www.freecodecamp.org/learn/data-analysis-with-python/
@@ -75,8 +75,11 @@ Sequences support indexing, slicing, concatenation, repetition, and membership t
 Examples of sequences in Python include lists, tuples, strings, and byte arrays.
 Sequences guarantee order and allow duplicate elements, distinguishing them from other types of iterables that may not have a defined order or support indexing.
 
+### Versatile
+Describing Python as versatile means acknowledging its wide range of applications and adaptability to various programming tasks, domains, and paradigms.
+
 ## importing libraries
-### [1] importing multiple libraries
+### importing multiple libraries
 can write the importing statements this way:
 
 ```
