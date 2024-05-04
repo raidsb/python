@@ -11,7 +11,6 @@ https://blog.finxter.com/
 https://www.datacamp.com/cheat-sheet
 https://www.geeksforgeeks.org/ - https://www.geeksforgeeks.org/python-cheat-sheet/ 
 
-
 ## learning resources - data science
 https://www.kdnuggets.com/free-python-resources-that-can-help-you-become-a-pro 
 https://oli.cmu.edu/courses/principles-of-computation-with-python-open-free/ 
@@ -25,6 +24,64 @@ https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/
 https://mathspp.com/blog/til/better-test-parametrisation-in-pytest 
 
 ## Concepts:
+### scripting vs programming language
+* As a scripting language, Python is often used for automating tasks, executing scripts, and rapid prototyping. It's well-suited for tasks such as system administration, web development, data analysis, and scientific computing.
+* As a programming language, Python is used to develop a wide range of software applications, including desktop GUI applications, web applications, games, artificial intelligence systems, and more. Python's versatility, readability, and extensive standard library make it a popular choice for software development projects of all sizes.
+
+The distinction between scripting and programming is somewhat fluid, and the terms are often used interchangeably. However, there are some general guidelines that can help differentiate between the two:
+* Scope and Complexity:
+Scripting typically refers to writing small programs or scripts to automate specific tasks or perform simple operations. These scripts are often interpreted and executed line by line.
+Programming usually involves developing larger, more complex software applications that may require planning, design, and implementation of algorithms and data structures. Programs are often compiled into machine code before execution.
+
+* Purpose and Context:
+Scripting is often used for tasks such as system administration, data processing, automation, or gluing together different software components.
+Programming is commonly associated with software development for creating standalone applications, libraries, frameworks, or systems.
+
+* Language Choice:
+Scripting languages like Python, JavaScript, or Bash are often used for scripting tasks due to their ease of use, flexibility, and quick development cycle.
+Programming languages like Java, C++, or C# are typically used for larger software development projects where performance, scalability, and maintainability are important.
+
+* Execution Environment:
+Scripts are usually executed within a runtime environment or interpreter without the need for compilation.
+Programs are compiled into machine code or intermediate bytecode before execution.
+
+#### can a program be both scripting and programming?
+Yes, a program can be both scripting and programming depending on how it's used and the context in which it operates.
+
+A program can be considered scripting when it's used to automate specific tasks or perform simple operations, typically in an interpreted environment. These scripts are often written in scripting languages like Python, Bash, or JavaScript and executed line by line.
+On the other hand, the same program can also be considered programming when it's involved in developing larger, more complex software applications or systems. This may involve planning, designing, and implementing algorithms and data structures, and the program may be compiled into machine code before execution.
+For example, a Python script that automates a series of data processing tasks could be considered scripting. However, if that same script evolves into a larger, more sophisticated software application with a graphical user interface (GUI) and various modules interacting with each other, it could be viewed as a full-fledged program.
+So, whether a program is considered scripting or programming depends on factors such as its scope, complexity, purpose, and context of use. Often, the terms scripting and programming are used interchangeably, and the distinction between them can be fluid.
+
+### operators 
+These are standard symbols used in logical and mathematical processes. 
+* mathematical operators: +, -, *, /, ...
+* Logical operators: or, and, not. 
+* comparison: <, >, ==.
+* bitwise operators 
+```
+# Examples of Bitwise operators
+a = 10
+b = 4
+
+# Print bitwise AND operation
+print(a & b)
+
+# Print bitwise OR operation
+print(a | b)
+
+# Print bitwise NOT operation
+print(~a)
+
+# print bitwise XOR operation
+print(a ^ b)
+
+# print bitwise right shift operation
+print(a >> 2)
+
+# print bitwise left shift operation
+print(a << 2)
+```
 ### mutable vs immutable
 refers to whther the state of an object can be changed after they are created or not. 
 
@@ -89,6 +146,20 @@ or this way:
 ```
 from library import (lib1, lib2) # the parentheses are used for grouping for better readiblity but optional.
 ```
+
+## Print
+print parameters
+```
+# ends the output with a space
+print("Welcome to", end=' ')
+
+# code for disabling the softspace feature
+print('09', '12', '2016', sep='-')
+
+# another example
+print('Example', 'geeksforgeeks', sep='@')
+```
+
 ## variables
 A variable is used to store data that will be used by the program. 
 The equal sign = is used to assign a value to a variable.
@@ -1027,7 +1098,7 @@ while msg != 'quit':
 ```
 
 ## Functions 
-
+### return hint with ->
 "->" in the function header is a hint of the return type
 ```
 def raw_file_names(self) -> str:
@@ -1036,6 +1107,7 @@ def raw_file_names(self) -> str:
 # more details about -> type: -> str: This part is a type hint, indicating that the method is expected to return a value of type str (string). Type hints are optional in Python, but they can provide information to developers and tools about the expected types of function parameters and return values.
 ```
 
+### args and kwargs
 * *args and **kwargs
 Splat (*) expands a collection into positional arguments, while splatty-splat (**) expands a dictionary into keyword arguments.
 ```
@@ -1075,7 +1147,7 @@ Other Uses of *
 head, *body, tail = [1,2,3,4,5]
 ```
 
-## lambda
+### lambda
 ```
 # lambda: <return_value>
 # lambda <argument1>, <argument2>: <return_value>
@@ -1096,6 +1168,73 @@ Example using lambda in fibbonaci (recursive call)
 fib = lambda n : n if n <= 1 else fib(n-1) + fib(n-2)
 result = fib(10)
 print(result) #55
+```
+
+Example 
+```
+calc = lambda num: "Even number" if num % 2 == 0 else "Odd number"
+
+print(calc(20))
+```
+### Useful built-in functions map, reduce, filter
+
+* Map The map() function returns a map object(which is an iterator) of the results after applying the given function to each item of a given iterable.
+```
+# example 1: Return double of n
+def addition(n):
+    return n + n
+
+# We double all numbers using map()
+numbers = (1, 2, 3, 4)
+result = map(addition, numbers)
+print(list(result))
+
+# example 2: using lambda
+list(map(lambda x: x + 1, range(10)))            # [1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+```
+
+* Filter The filter() method filters the given sequence using a function that examines each element in the sequence to see if it is true or false.
+```
+# function that filters vowels
+def fun(variable):
+    letters = ['a', 'e', 'i', 'o', 'u']
+    if (variable in letters):
+        return True
+    else:
+        return False
+
+
+# sequence
+sequence = ['g', 'e', 'e', 'j', 'k', 's', 'p', 'r']
+
+# using filter function
+filtered = filter(fun, sequence)
+
+print('The filtered letters are:')
+for s in filtered:
+    print(s)
+	
+# another example: 
+list(filter(lambda x: x > 5, range(10)))         # (6, 7, 8, 9)
+```
+
+* reduce 
+The reduce function is used to apply a certain function to all of the list components indicated in the sequence sent along.
+```
+from functools import reduce
+reduce(lambda acc, x: acc + x, range(10))        # 45
+# how it works
+# 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+# 1, 2, 3, 4, 5, 6, 7, 8, 9
+# 3 , 3, 4, 5, 6, 7, 8, 9 
+# 6, 4, 5, 6, 7, 8, 9 
+# 10, 5, 6, 7, 8, 9
+# 15, 6, 7, 8, 9
+# 21, 7, 8, 9
+# 28, 8, 9
+# 36, 9
+# 45
+
 ```
 
 ## Comprehension
@@ -1121,14 +1260,6 @@ for i in range(3):
 # <expression_if_true> if <condition> else <expression_if_false>
 
 [a if a else 'zero' for a in [0, 1, 0, 3]] # ['zero', 1, 'zero', 3]
-```
-
-## Map Filter Reduce
-```
-from functools import reduce
-list(map(lambda x: x + 1, range(10)))            # [1, 2, 3, 4, 5, 6, 7, 8, 9,10]
-list(filter(lambda x: x > 5, range(10)))         # (6, 7, 8, 9)
-reduce(lambda acc, x: acc + x, range(10))        # 45
 ```
 
 ## Closures functions 
@@ -1584,6 +1715,19 @@ while True:
     break
 ```
 
+example: 
+```
+a = [1, 2, 3]
+try:
+    print ("Second element = %d" %(a[1]))
+
+    # Throws error since there are only 3 elements in array
+    print ("Fourth element = %d" %(a[3]))
+
+except:
+    print ("An error occurred")
+```
+
 ## Files 
 ```
 <file> = open('<path>', mode='r', encoding=None)
@@ -1633,6 +1777,63 @@ append to text File
 def append_to_file(filename, text):
     with open(filename, 'a', encoding='utf-8') as file:
         file.write(text)
+```
+
+Example:
+```
+import os
+
+def create_file(filename):
+    try:
+        with open(filename, 'w') as f:
+            f.write('Hello, world!\n')
+        print("File " + filename + " created successfully.")
+    except IOError:
+        print("Error: could not create file " + filename)
+
+def read_file(filename):
+    try:
+        with open(filename, 'r') as f:
+            contents = f.read()
+            print(contents)
+    except IOError:
+        print("Error: could not read file " + filename)
+
+def append_file(filename, text):
+    try:
+        with open(filename, 'a') as f:
+            f.write(text)
+        print("Text appended to file " + filename + " successfully.")
+    except IOError:
+        print("Error: could not append to file " + filename)
+
+def rename_file(filename, new_filename):
+    try:
+        os.rename(filename, new_filename)
+        print("File " + filename + " renamed to " + 
+                  new_filename + " successfully.")
+    except IOError:
+        print("Error: could not rename file " + filename)
+
+def delete_file(filename):
+    try:
+        os.remove(filename)
+        print("File " + filename + " deleted successfully.")
+    except IOError:
+        print("Error: could not delete file " + filename)
+
+
+if __name__ == '__main__':
+    filename = "example.txt"
+    new_filename = "new_example.txt"
+
+    create_file(filename)
+    read_file(filename)
+    append_file(filename, "This is some additional text.\n")
+    read_file(filename)
+    rename_file(filename, new_filename)
+    read_file(new_filename)
+    delete_file(new_filename)
 ```
 
 ## CSV File
@@ -1781,6 +1982,40 @@ Special Sequences
 '\s' == '[ \t\n\r\f\v]'  # Whitespace
 '\w' == '[a-zA-Z0-9_]'   # Alphanumeric
 ```
+
+example of Match
+```
+import re
+
+# Text to search
+text = "Hello, my email is example@example.com"
+
+# Define a pattern to match email addresses
+pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"
+
+# Search for the pattern in the text
+match = re.search(pattern, text)
+
+# Check if a match is found
+if match:
+    email = match.group()
+    print("Found email:", email)
+else:
+    print("No email found.")
+```
+
+MetaCharacters are helpful, significant, and will be used in module re functions, which helps us comprehend the analogy with RE. The list of metacharacters is shown below.
+* \ sed to drop the special meaning of character following it.
+* [] Represent a character class.
+* ^ Matches the beginning.
+* $ Matches the end.
+* . Matches any character except newline.
+* | Means OR (Matches with any of the characters separated by it.
+* ? Matches zero or one occurrence.
+* * Any number of occurrences (including 0 occurrences).
+* + One or more occurrences.
+* {} Indicate the number of occurrences of a preceding RegEx to match.
+* () Enclose a group of RegEx.
 
 ## Algorithms 
 ### arrays 
