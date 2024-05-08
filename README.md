@@ -3,15 +3,20 @@
 ## referece resources
 https://docs.python.org/3/        # python language specification
 https://peps.python.org/pep-0008/ # styling documentation (python enhancement proposal)
+https://www.geeksforgeeks.org/    # tutorials
 
 ## Learning resources
 https://zerotomastery.io/cheatsheets/python-cheat-sheet/  # Done
+https://www.geeksforgeeks.org/python-cheat-sheet/         # Done
 https://realpython.com/
+https://realpython.com/python-class-constructor/
+https://realpython.com/python-classes/#special-methods-and-protocols 
 https://blog.finxter.com/
-https://www.datacamp.com/cheat-sheet
-https://www.geeksforgeeks.org/ - https://www.geeksforgeeks.org/python-cheat-sheet/ 
+https://realpython.com/python-double-underscore/ 
+https://realpython.com/inheritance-composition-python/ 
 
 ## learning resources - data science
+https://www.datacamp.com/cheat-sheet
 https://www.kdnuggets.com/free-python-resources-that-can-help-you-become-a-pro 
 https://oli.cmu.edu/courses/principles-of-computation-with-python-open-free/ 
 https://www.freecodecamp.org/learn/data-analysis-with-python/
@@ -134,6 +139,65 @@ Sequences guarantee order and allow duplicate elements, distinguishing them from
 
 ### Versatile
 Describing Python as versatile means acknowledging its wide range of applications and adaptability to various programming tasks, domains, and paradigms.
+
+### oop
+A definition:
+* Object-oriented programming (OOP) is a method of structuring a program by bundling related properties and behaviors into individual objects.
+* Object-oriented programming is a programming paradigm that provides a means of structuring programs so that properties and behaviors are bundled into individual objects.
+* object-oriented programming is an approach for modeling concrete, real-world things, like cars, as well as relations between things, like companies and employees or students and teachers. OOP models real-world entities as software objects that have some data associated with them and can perform certain operations.
+
+key notes
+* Define a class, which is a sort of blueprint for an object
+* Instantiate a class to create an object
+* Use attributes and methods to define the properties and behaviors of an object
+* Use inheritance to create child classes from a parent class
+* Reference a method on a parent class using super()
+* Check if an object inherits from another class using isinstance()
+
+#### Inheritnce
+Inheritance is the process by which one class takes on the attributes and methods of another. Newly formed classes are called child classes, and the classes that you derive child classes from are called parent classes.
+Child classes can override or extend the attributes and methods of parent classes. In other words, child classes inherit all of the parent’s attributes and methods but can also specify attributes and methods that are unique to themselves.
+
+* override a parent method
+```
+# inheritance.py
+
+class Parent:
+    hair_color = "brown"
+
+class Child(Parent):
+    hair_color = "purple" # overriden
+```
+
+* extend a parent
+You also inherit, in a sense, your language from your parents. If your parents speak English, then you’ll also speak English. Now imagine you decide to learn a second language, like German. In this case, you’ve extended your attributes because you’ve added an attribute that your parents don’t have:
+```
+# inheritance.py
+
+class Parent:
+    speaks = ["English"]
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.speaks.append("German") # extending the parent attribute with additional value in the child
+```
+
+* using super methods 
+```
+# dog.py
+
+# ...
+
+class JackRussellTerrier(Dog):
+    def speak(self, sound="Arf"):
+        return super().speak(sound)
+
+# ...
+```
+
+### dunder methods
+Methods like .__init__() and .__str__() are called dunder methods because they begin and end with double underscores. There are many dunder methods that you can use to customize classes in Python
 
 ## importing libraries
 ### importing multiple libraries
@@ -1489,7 +1553,9 @@ Object-oriented programming (OOP) is a programming paradigm that organizes softw
 These features and capabilities of OOP help in designing modular, maintainable, and extensible software systems by promoting concepts such as encapsulation, inheritance, and polymorphism. By using OOP principles effectively, developers can create code that is easier to understand, modify, and extend.
 
 ### class
-User defined objects are created using the class keyword
+User defined objects are created using the class keyword.
+Python class names are written in CapitalizedWords notation by convention. 
+For example, a class for a specific breed of dog, like the Jack Russell Terrier, would be written as JackRussellTerrier.
 ```
 class <name>:
     age = 80 # Class Object Attribute
@@ -1499,6 +1565,76 @@ class <name>:
     @classmethod
     def get_class_name(cls):
         return cls.__name__
+```
+
+example: 
+you define a class by using the class keyword followed by a name and a colon. Then you use .__init__() to declare which attributes each instance of the class should have:
+```
+class Employee:
+    def __init__(self, name, age):
+        self.name =  name
+        self.age = age
+```
+
+```
+# dog.py
+
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+```
+
+### class attributes
+On the other hand, class attributes are attributes that have the same value for all class instances. You can define a class attribute by assigning a value to a variable name outside of .__init__().
+Use class attributes to define properties that should have the same value for every class instance. Use instance attributes for properties that vary from one instance to another.
+
+```
+# dog.py
+
+class Dog:
+    species = "Canis familiaris"
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+```
+
+Example
+```
+# dog.py
+
+class Dog:
+    species = "Canis familiaris"
+
+    def __init__(self, name, age, breed):
+        self.name = name
+        self.age = age
+        self.breed = breed
+
+    def __str__(self):
+        return f"{self.name} is {self.age} years old"
+
+    def speak(self, sound):
+        return f"{self.name} says {sound}"
+```
+
+### Intstanciating
+This funny-looking string of letters and numbers is a memory address that indicates where Python stores the Dog object in your computer’s memory. 
+```
+>>> Dog()
+<__main__.Dog object at 0x0004ccc90>
+```
+
+* checking the type of a class and if a child is instance of the Parent
+To determine which class a given object belongs to, you can use the built-in type():
+```
+>>> type(miles)
+<class '__main__.JackRussellTerrier'>
+What if you want to determine if miles is also an instance of the Dog class? You can do this with the built-in isinstance():
+
+>>> isinstance(miles, Dog)
+True
 ```
 
 ### Instance method vs class method vs static method
