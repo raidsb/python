@@ -8,12 +8,14 @@ https://www.geeksforgeeks.org/    # tutorials
 ## Learning resources
 https://zerotomastery.io/cheatsheets/python-cheat-sheet/  # Done
 https://www.geeksforgeeks.org/python-cheat-sheet/         # Done
-https://realpython.com/
-https://realpython.com/python-class-constructor/
+https://realpython.com/                                   # reference
+https://blog.finxter.com/                                 # reference
+https://realpython.com/python-class-constructor/          # -> Subclassing Immutable Built-in Types
 https://realpython.com/python-classes/#special-methods-and-protocols 
-https://blog.finxter.com/
 https://realpython.com/python-double-underscore/ 
 https://realpython.com/inheritance-composition-python/ 
+https://realpython.com/python-unittest/ 
+https://realpython.com/python-callable-instances/
 
 ## learning resources - data science
 https://www.datacamp.com/cheat-sheet
@@ -22,13 +24,31 @@ https://oli.cmu.edu/courses/principles-of-computation-with-python-open-free/
 https://www.freecodecamp.org/learn/data-analysis-with-python/
 https://www.kdnuggets.com/2022/09/free-python-data-science-course.html
 
+## learning resources - QA
+https://hackr.io/blog/python-interview-questions 
+https://www.geeksforgeeks.org/python-interview-questions/
+https://www.datacamp.com/blog/top-python-interview-questions-and-answers 
+https://www.interviewbit.com/python-interview-questions/#interpreted-language
+
 ## libraries
 https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/    
+https://github.com/brohrer/pacemaker # For controlling time per iteration loop in Python.
+
 
 ## pytest
 https://mathspp.com/blog/til/better-test-parametrisation-in-pytest 
 
 ## Concepts:
+* What is python? main features of python language?
+Python is a general-purpose, high-level, interpreted language. It has fewer syntactic constructions compared to other languages.
+some of the unique features of python:
+1* Structured and functional programming is supported.
+2* It can be compiled to byte code to create larger applications.
+3* Supports high-level dynamic data types.
+4* Supports checking of dynamic data types.
+5* Applies automated garbage collection.
+6* It could be used effectively along with Java, COBRA, C, C++, ActiveX, and COM.
+
 ### scripting vs programming language
 * As a scripting language, Python is often used for automating tasks, executing scripts, and rapid prototyping. It's well-suited for tasks such as system administration, web development, data analysis, and scientific computing.
 * As a programming language, Python is used to develop a wide range of software applications, including desktop GUI applications, web applications, games, artificial intelligence systems, and more. Python's versatility, readability, and extensive standard library make it a popular choice for software development projects of all sizes.
@@ -154,6 +174,247 @@ key notes
 * Reference a method on a parent class using super()
 * Check if an object inherits from another class using isinstance()
 
+#### override vs overwrite vs overload 
+
+"Override," "overwrite," and "overload" are terms used in the context of object-oriented programming to describe different concepts related to methods and functions. Here's a brief explanation of each:
+
+* Override:
+Inheritance: Override refers to the practice of providing a new implementation for a method in a subclass that is already present in its superclass.
+Polymorphism: When an overridden method is called on an instance of the subclass, the subclass's implementation of the method is executed instead of the superclass's implementation.
+Usage: Override is commonly used to customize or extend the behavior of inherited methods to suit the specific requirements of a subclass.
+Overwrite:
+
+* Informal Term: "Overwrite" is not a commonly used term in the context of object-oriented programming.
+Confusion: It may sometimes be used interchangeably with "override," but it's not standard terminology.
+Usage: To avoid confusion, it's best to use "override" when referring to providing new implementations for inherited methods.
+
+* Overload:
+Multiple Definitions: Overload refers to defining multiple methods or functions with the same name within the same scope but with different parameter lists (i.e., different types or numbers of parameters).
+Signature: Overloaded methods must have different method signatures, which include the method's name and the number, types, or order of its parameters.
+Polymorphism: Overload enables polymorphism at compile-time (static polymorphism) because the appropriate method to call is determined based on the arguments' types at compile-time.
+Usage: Overload is commonly used to provide multiple ways of invoking a method or function with different parameter types or numbers. It enhances code readability and flexibility by allowing methods with similar functionality to share the same name.
+
+#### constructors
+Class constructors internally trigger Python’s instantiation process, which runs through two main steps: instance creation and instance initialization
+
+```
+>>> class SomeClass:
+...     pass
+...
+
+>>> # Call the class to construct an object
+>>> SomeClass()
+<__main__.SomeClass object at 0x7fecf442a140>
+```
+
+In Python, when you call a class as you did in the above example, you’re calling the class constructor, which creates, initializes, and returns a new object by triggering Python’s internal instantiation process.
+
+To run the first step, Python classes have a special method called .__new__(), which is responsible for creating and returning a new empty object. Then another special method, .__init__(), takes the resulting object, along with the class constructor’s arguments.
+
+so there are special dunder methods to create a new instance and initialize it.
+* The first method is the __new__ method which creates the instance from the object.
+* The second method is the __init__ used to initialize the object.
+
+an example showing the instanciation of a new Object
+```
+# point.py
+
+class Point:
+    def __new__(cls, *args, **kwargs):
+        print("1. Create a new instance of Point.")
+        return super().__new__(cls) # NOte 1: it seems all classes inherit from a parent class, this is why there is a super().__new__ here
+		                            # Note 2: __new__ is a class method but returns an instance object.
+									# Note 3: the instance returned will be the self argument to __init__
+    def __init__(self, x, y):       # self is the first argument, which holds a reference to the current instance
+        print("2. Initialize the new instance of Point.")
+        self.x = x
+        self.y = y
+
+    def __repr__(self) -> str:      # special method, which provides a proper string representation for your Point class 
+        return f"{type(self).__name__}(x={self.x}, y={self.y})"
+
+# calling 
+>>> from point import Point
+
+>>> point = Point(21, 42)
+1. Create a new instance of Point.
+2. Initialize the new instance of Point.
+
+>>> point
+Point(x=21, y=42)
+
+# Now try to call the __new__ and __init__ manually:
+>>> from point import Point
+
+>>> point = Point.__new__(Point)
+1. Create a new instance of Point.
+
+>>> # The point object is not initialized
+>>> point.x
+Traceback (most recent call last):
+    ...
+AttributeError: 'Point' object has no attribute 'x'
+>>> point.y
+Traceback (most recent call last):
+    ...
+AttributeError: 'Point' object has no attribute 'y'
+
+>>> point.__init__(21, 42)
+2. Initialize the new instance of Point.
+
+>>> # Now point is properly initialized
+>>> point
+Point(x=21, y=42)
+
+```
+
+It is crazy and don't know yet why someone will do that but A subtle and important detail to note about .__new__() is that it can also return an instance of a class different from the class that implements the method itself. When that happens, Python doesn’t call .__init__() in the current class, because there’s no way to unambiguously know how to initialize an object of a different class.
+
+```
+# ab_classes.py
+
+class A:
+    def __init__(self, a_value):
+        print("Initialize the new instance of A.")
+        self.a_value = a_value
+
+class B:
+    def __new__(cls, *args, **kwargs):
+        return A(42) # ------------> returns an instance of class A
+
+    def __init__(self, b_value):
+        print("Initialize the new instance of B.")
+        self.b_value = b_value
+
+# demonstrate:
+>>> from ab_classes import B
+
+>>> b = B(21)
+Initialize the new instance of A.
+
+>>> b.b_value
+Traceback (most recent call last):
+    ...
+AttributeError: 'A' object has no attribute 'b_value'
+
+>>> isinstance(b, B)
+False
+>>> isinstance(b, A)
+True
+
+>>> b.a_value
+42
+
+```
+
+__init__ cannot return but None implecitly
+```
+>>> class Rectangle:
+...     def __init__(self, width, height):
+...         self.width = width
+...         self.height = height
+...         return 42
+...
+
+>>> rectangle = Rectangle(21, 42)
+Traceback (most recent call last):
+    ...
+TypeError: __init__() should return None, not 'int'
+```
+
+In .__init__(), you can also run any transformation over the input arguments to properly initialize the instance attributes. For example, if your users will use Rectangle directly, then you might want to validate the supplied width and height and make sure that they’re correct before initializing the corresponding attributes:
+example of overriding __init__ method to do additional validation for example:
+
+```
+>>> class Rectangle:
+...     def __init__(self, width, height):
+...         if not (isinstance(width, (int, float)) and width > 0):
+...             raise ValueError(f"positive width expected, got {width}")   # example of using raise for validating given values.
+...         self.width = width
+...         if not (isinstance(height, (int, float)) and height > 0):
+...             raise ValueError(f"positive height expected, got {height}") # example of using raise for validating given values.
+...         self.height = height
+...
+
+>>> rectangle = Rectangle(-21, 42)
+Traceback (most recent call last):
+    ...
+ValueError: positive width expected, got -21
+```
+
+Using __init__ in inheritance to add additonal steps to do in the Child
+```
+>>> class Person:
+...     def __init__(self, name, birth_date):
+...         self.name = name
+...         self.birth_date = birth_date
+...
+
+>>> class Employee(Person):
+...     def __init__(self, name, birth_date, position):
+...         super().__init__(name, birth_date)
+...         self.position = position          # ---------> this is called "EXTEND" the base class behavior 
+...
+
+>>> john = Employee("John Doe", "2001-02-07", "Python Developer")
+
+>>> john.name
+'John Doe'
+>>> john.birth_date
+'2001-02-07'
+>>> john.position
+'Python Developer'
+```
+
+Special cases when you want to create your own __new__ method (you want to control how the instance is created)
+Providing Custom Object Creators
+Typically, you’ll write a custom implementation of .__new__() only when you need to control the creation of a new instance at a low level. Now, if you need a custom implementation of this method, then you should follow a few steps:
+1* Create a new instance by calling super().__new__() with appropriate arguments.
+2* Customize the new instance according to your specific needs.
+3* Return the new instance to continue the instantiation process.
+
+```
+class SomeClass:
+    def __new__(cls, *args, **kwargs):
+        instance = super().__new__(cls)
+        # Customize your instance here...
+        return instance
+```
+
+It’s important to note that object.__new__() itself only accepts a single argument, the class to instantiate. If you call object.__new__() with more arguments, then you get a TypeError:
+```
+>>> class SomeClass:
+...     def __new__(cls, *args, **kwargs):
+...         return super().__new__(cls, *args, **kwargs)
+...     def __init__(self, value):
+...         self.value = value
+...
+
+>>> SomeClass(42)
+Traceback (most recent call last):
+    ...
+TypeError: object.__new__() takes exactly one argument (the type to instantiate)
+```
+In this example, you hand over *args and **kwargs as additional arguments in the call to super().__new__(). The underlying object.__new__() accepts only the class as an argument, so you get a TypeError when you instantiate the class.
+
+However, object.__new__() still accepts and passes over extra arguments to .__init__() if your class doesn’t override .__new__(), as in the following variation of SomeClass:
+```
+>>> class SomeClass:
+...     def __init__(self, value):
+...         self.value = value
+...
+
+>>> some_obj = SomeClass(42)
+>>> some_obj
+<__main__.SomeClass object at 0x7f67db8d0ac0>
+>>> some_obj.value
+42
+```
+In this implementation of SomeClass, you don’t override .__new__(). The object creation is then delegated to object.__new__(), which now accepts value and passes it over to SomeClass.__init__() to finalize the instantiation. Now you can create new and fully initialized instances of SomeClass, just like some_obj in the example.
+
+args and kwargs are used only when __new__ is called explicitly in the code.
+Class.__new__(arguments)
+
 #### Inheritnce
 Inheritance is the process by which one class takes on the attributes and methods of another. Newly formed classes are called child classes, and the classes that you derive child classes from are called parent classes.
 Child classes can override or extend the attributes and methods of parent classes. In other words, child classes inherit all of the parent’s attributes and methods but can also specify attributes and methods that are unique to themselves.
@@ -198,6 +459,15 @@ class JackRussellTerrier(Dog):
 
 ### dunder methods
 Methods like .__init__() and .__str__() are called dunder methods because they begin and end with double underscores. There are many dunder methods that you can use to customize classes in Python
+
+### Exceptions and errors
+* Errors are concrete conditions, such as syntax and logical errors, that make your code work incorrectly or even crash. Often, you can fix errors by updating or modifying the code, installing a new version of a dependency, checking the code’s logic, and so on. So, your code won’t break, and your program will continue its normal execution.
+You can fix errors, but you can’t handle them. In other words, if you have a syntax error like the one in the example, then you won’t be able to handle that error and make the code run. You need to correct the syntax.
+
+Note in this kind of issues "errors": You can fix errors, but you can’t handle them. In other words, if you have a syntax error like the one in the example, then you won’t be able to handle that error and make the code run. You need to correct the syntax.
+
+* Exception handling
+exceptions are events that interrupt the execution of a program. As their name suggests, exceptions occur in exceptional situations that should or shouldn’t happen. So, to prevent your program from crashing after an exception, you must handle the exception with the appropriate exception-handling mechanism.
 
 ## importing libraries
 ### importing multiple libraries
@@ -1863,6 +2133,9 @@ try:
 except:
     print ("An error occurred")
 ```
+
+### built-in exception handlings
+Python has a complete set of built-in exceptions that provide a quick and efficient way to handle errors and exceptional situations that may happen in your code
 
 ## Files 
 ```
