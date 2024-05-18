@@ -34,10 +34,6 @@ https://www.interviewbit.com/python-interview-questions/#interpreted-language
 https://www.ubuntupit.com/best-python-libraries-and-packages-for-beginners/    
 https://github.com/brohrer/pacemaker # For controlling time per iteration loop in Python.
 
-
-## pytest
-https://mathspp.com/blog/til/better-test-parametrisation-in-pytest 
-
 ## Concepts:
 * What is python? main features of python language?
 Python is a general-purpose, high-level, interpreted language. It has fewer syntactic constructions compared to other languages.
@@ -469,6 +465,18 @@ Note in this kind of issues "errors": You can fix errors, but you can’t handle
 * Exception handling
 exceptions are events that interrupt the execution of a program. As their name suggests, exceptions occur in exceptional situations that should or shouldn’t happen. So, to prevent your program from crashing after an exception, you must handle the exception with the appropriate exception-handling mechanism.
 
+## installing and setting-up environment
+```
+# update version of pip
+python.exe -m pip install --upgrade pip
+
+# checking version 
+tox --version
+
+# upgrading a lib
+pip install --upgrade tox
+```
+
 ## importing libraries
 ### importing multiple libraries
 can write the importing statements this way:
@@ -480,6 +488,16 @@ or this way:
 ```
 from library import (lib1, lib2) # the parentheses are used for grouping for better readiblity but optional.
 ```
+
+### importing a single module with __import__()
+
+Note: What if your application is a single script?
+
+You can import any attributes of the script, such as classes, functions, and variables by using the built-in __import__() function. Instead of from my_sum import sum, you can write the following:
+
+target = __import__("my_sum.py")
+sum = target.sum
+The benefit of using __import__() is that you don’t have to turn your project folder into a package, and you can specify the file name. This is also useful if your filename collides with any standard library packages. For example, math.py would collide with the math module.
 
 ## Print
 print parameters
@@ -704,6 +722,15 @@ print(bool(()))
 print(bool(''))
 print(bool(range(0)))
 print(bool(set()))
+```
+
+### built-in non-primitive datatype - fractions
+```
+from fractions import Fraction
+
+# a list of fractions
+data = [Fraction(1, 4), Fraction(1, 4), Fraction(2, 5)]
+
 ```
 
 ### built-in non-primitive datatype - Dictionary
