@@ -5,6 +5,9 @@ https://nose2.readthedocs.io/
 https://realpython.com/python-cli-testing/ 
 https://realpython.com/python-doctest/
 https://mathspp.com/blog/til/better-test-parametrisation-in-pytest 
+https://www.travis-ci.com/
+https://realpython.com/python-continuous-integration/ 
+https://realpython.com/python-code-quality/ 
 
 # Top test automation libraries in python
 Here are 23 libraries you'll find in this guide for why Python is so awesome:
@@ -515,4 +518,102 @@ deps =
     pytest
     pandas
 ```
+
+** executing tox **
+```
+$ tox -e py36 # run for a single environment 
+$ tox -r # Recreate the virtual environments, in case your dependencies have changed or site-packages is corrupt:
+$ tox -q # Run Tox with less verbose output: 
+$ tox -v # Running Tox with more verbose output
+```
+
+# automating testing
+ Automated testing tools are often known as CI/CD tools, which stands for “Continuous Integration/Continuous Deployment.” They can run your tests, compile and publish any applications, and even deploy them into production.
+ 
+example of CI/CD yml file content:
+```
+language: python
+python:
+  - "2.7"
+  - "3.7"
+install:
+  - pip install -r requirements.txt
+script:
+  - python -m unittest discover
+```
+
+Once you have committed and pushed this file, Travis CI will run these commands every time you push to your remote Git repository. You can check out the results on their website.
+
+# Linters
+Tools that improve the quality of your application. A linter will look at your code and comment on it. It could give you tips about mistakes you’ve made, correct trailing spaces, and even predict bugs you may have introduced.
+
+# Testing for Performance Degradation Between Changes
+There are many ways to benchmark code in Python. The standard library provides the timeit module, which can time functions a number of times and give you the distribution. This example will execute test() 100 times and print() the output:
+
+```
+def test():
+    # ... your code
+
+if __name__ == '__main__':
+    import timeit
+    print(timeit.timeit("test()", setup="from __main__ import test", number=100))
+```
+
+Another option, if you decided to use pytest as a test runner, is the pytest-benchmark plugin. This provides a pytest fixture called benchmark. You can pass benchmark() any callable, and it will log the timing of the callable to the results of pytest.
+
+You can install pytest-benchmark from PyPI using pip:
+```
+$ pip install pytest-benchmark
+```
+
+Then, you can add a test that uses the fixture and passes the callable to be executed:
+
+def test_my_function(benchmark):
+    result = benchmark(test)
+Execution of pytest will now give you benchmark results:
+
+Pytest benchmark screenshot
+More information is available at the Documentation Website.
+
+Testing for Security Flaws in Your Application
+Another test you will want to run on your application is checking for common security mistakes or vulnerabilities.
+
+You can install bandit from PyPI using pip:
+
+$ pip install bandit
+You can then pass the name of your application module with the -r flag, and it will give you a summary:
+
+$ bandit -r my_sum
+[main]  INFO    profile include tests: None
+[main]  INFO    profile exclude tests: None
+[main]  INFO    cli include tests: None
+[main]  INFO    cli exclude tests: None
+[main]  INFO    running on Python 3.5.2
+Run started:2018-10-08 00:35:02.669550
+
+Test results:
+        No issues identified.
+
+Code scanned:
+        Total lines of code: 5
+        Total lines skipped (#nosec): 0
+
+Run metrics:
+        Total issues (by severity):
+                Undefined: 0.0
+                Low: 0.0
+                Medium: 0.0
+                High: 0.0
+        Total issues (by confidence):
+                Undefined: 0.0
+                Low: 0.0
+                Medium: 0.0
+                High: 0.0
+Files skipped (0):
+As with flake8, the rules that bandit flags are configurable, and if there are any you wish to ignore, you can add the following section to your setup.cfg file with the options:
+
+[bandit]
+exclude: /test
+tests: B101,B102,B301
+More details are available at the GitHub Website.
 
