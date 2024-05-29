@@ -16,6 +16,8 @@ https://realpython.com/python-double-underscore/
 https://realpython.com/inheritance-composition-python/ 
 https://realpython.com/python-unittest/ 
 https://realpython.com/python-callable-instances/
+https://realpython.com/python-calendar-module/ 
+https://realpython.com/python-built-in-exceptions/ 
 
 ## learning resources - data science
 https://www.datacamp.com/cheat-sheet

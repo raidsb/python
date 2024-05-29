@@ -8,6 +8,7 @@ https://mathspp.com/blog/til/better-test-parametrisation-in-pytest
 https://www.travis-ci.com/
 https://realpython.com/python-continuous-integration/ 
 https://realpython.com/python-code-quality/ 
+https://lukeplant.me.uk/blog/posts/pyastgrep-and-custom-linting/ 
 
 # Top test automation libraries in python
 Here are 23 libraries you'll find in this guide for why Python is so awesome:

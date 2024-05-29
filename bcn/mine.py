@@ -89,7 +89,10 @@ class ABIDE2_BNI():
         print(self.csv_data_list)
 
     def load_image(self, file_path, normalize=False):
+        # Loading the image
         nii_image_data = nib.load(file_path)
+
+        # Get original image in binary format
         nii_bin_data_original = nii_image_data.get_fdata() # image is converted into NumPy arrays
 
         # Normalize values between [-1, 1]
@@ -123,7 +126,6 @@ class ABIDE2_BNI():
             nii_img_data, nii_bin_data_original, nii_bin_data_normalized = self.load_image(file_path, normalize=True)
 
             # Logging the loaded image
-            # Logging original image
             logging.info("Loaded original image shape: " + str(nii_bin_data_original.shape))
             logging.info("Saving slice 190 of original image: " + file_path)
             save_file_name_original = log_dir + str(i) + "_original_" + file_path.replace("\\", "").replace(":", "").replace(".", "") + ".png"
@@ -145,7 +147,15 @@ class ABIDE2_BNI():
             np.unique(nii_bin_data_normalized)))
 
             # Resample AAL atlas to match the resolution of the images and convert to binary array
-            aal_atlas_resampled_img = resample_img(nib.load(self.atlas), target_affine=nii_img_data.affine, target_shape=nii_bin_data_normalized.shape)
+            """ target_affine=nii_img_data.affine specifies that the resampled atlas should use the same
+            affine transformation as nii_img_data.
+            The affine transformation is a matrix that relates voxel indices to coordinates in some
+            physical space (usually millimeters in brain imaging).
+            In summary, this line of code adjusts the atlas image so that it has the same voxel 
+            dimensions and physical space alignment as the normalized brain image data. 
+            This ensures that each voxel in the resampled atlas corresponds directly to a voxel 
+            in the brain image."""
+            aal_atlas_resampled_img = resample_img(nib.load(self.atlas), target_affine=nii_img_data.affine, target_shape=nii_bin_data_original.shape)
             aal_atlas_resampled_data = aal_atlas_resampled_img.get_fdata()
 
             # logging resampled AAL
@@ -174,129 +184,12 @@ class ABIDE2_BNI():
                 np.max(masked_binary_image)) + "unique:" +
                          str(np.unique(masked_binary_image)))
 
-            masked_ni_img = nib.Nifti1Image(masked_binary_image, affine=np.eye(4))
-            normalized_ni_img = nib.Nifti1Image(nii_bin_data_normalized, affine=np.eye(4))
-            atlas_resampled_normalized_ni_img = nib.Nifti1Image(aal_atlas_data_resampled_normalized, affine=np.eye(4))
-            nilearn.plotting.plot_img(normalized_ni_img)
-            nilearn.plotting.show()
-            nilearn.plotting.plot_img(atlas_resampled_normalized_ni_img)
-            nilearn.plotting.show()
-            nilearn.plotting.plot_img(masked_ni_img)
-            nilearn.plotting.show()
-
-            # unique_labels = np.unique(masked_binary_image)
-            # print("unique labels: ", unique_labels)
-            # #roi_mapping = {label: f'ROI_{label}' for label in unique_labels}
-
-            # roi_labels = np.vectorize(roi_mapping.get)(masked_binary_image)
-            # unique_rois = np.unique(roi_labels)
-            # num_rois = len(unique_rois)
-            # print(f"Number of grouped ROIs: {num_rois}")
-
-            # nilearn_aal_atlas = nilearn.datasets.fetch_atlas_aal
-            # print(nilearn_aal_atlas)
-            # nilearn.plotting.plot_img(nilearn_aal_atlas)
-            # nilearn.plotting.show()
-
-            # Using nilear
-            # masked_binary_image = apply_mask(nii_img_data, aal_atlas_resampled_img)
-
-
-
-
-            # ########################################################### try0
-            # Use this when the Atlas has already defined regions lables.
-            # roi_nodes = [np.column_stack(np.where(roi)) for roi in masked_binary_image]
-            # """
-            # The results of this is list of tuples of this array([], shape=(0, 2), dtype=int64). number of tuples is 193 tuple.
-            # array([[ 48, 137],
-            #        [ 49, 147],
-            #        [ 51, 140],
-            #        [ 51, 160]], dtype=int64), the array for a slice having values. so (slice number, 51, 160) is a voxel.
-            # """
-
-            # Use this when you want the unique regions defined by the atlas.
-            # unique_rois = np.unique(masked_binary_image) # Unique Rois or labels
-            # print("nuber of nodes: ", len(unique_rois))
-
-            # for label in unique_rois:
-            #     # Extract all voxels corresponding to the current label
-            #     region_voxels = np.where(masked_binary_image == label)
-            #
-            #     # Process or visualize the region as needed
-            #     print(f"Region {label}: Voxel coordinates {region_voxels}")
-
-            # Extract voxel coordinates for each unique region
-            # roi_nodes = [np.column_stack(np.where(masked_binary_image == roi_value)) for roi_value in unique_rois]
-
-            # Create a graph
-            # G = nx.Graph()
-
-            # # Add nodes to the graph
-            # print("adding graph")
-            # for idx, roi_coords in enumerate(roi_nodes):
-            #     print("adding ", idx)
-            #     G.add_node(idx, coords=roi_coords)
-            #
-            # # Add edges based on some measure (e.g., Euclidean distance between centroids)
-            # for ic in range(len(roi_nodes)):
-            #     for j in range(ic + 1, len(roi_nodes)):
-            #         dist = np.linalg.norm(np.mean(roi_nodes[ic], axis=0) - np.mean(roi_nodes[j], axis=0))
-            #         G.add_edge(ic, j, weight=dist)
-
-            # show the graph
-            # print(G)
-            # pos = nx.spring_layout(G)  # You can use different layout algorithms
-            # nx.draw_networkx(G, pos=pos, with_labels=False, node_size=10)
-            # plt.show()
-
-            # ########################################################### try1
-            # threshold = 0.5
-            # nodes = np.column_stack(np.where(masked_binary_image))
-            # distances = cdist(nodes, nodes, 'euclidean')
-            # threshold = 10  # Adjust this threshold based on your data
-            # # edges = np.column_stack(np.where(distances < threshold))
-            # G = nx.Graph()
-            #
-            # for ii, coord in enumerate(nodes):
-            #     G.add_node(ii, pos=(coord[0], coord[1]))
-            #
-            # threshold_distance = 10  # Adjust this threshold as needed
-            # for ti in range(len(nodes)):
-            #     for j in range(ti + 1, len(nodes)):
-            #         if distances[ti, j] < threshold_distance:
-            #             G.add_edge(ti, j)
-
-            # ############################################################ try2
-            # flattened_image = masked_binary_image.reshape(masked_binary_image.shape[0], -1)
-            # features = torch.from_numpy(flattened_image).float()
-            # # for r in flattened_image:
-            # #     print(r)
-            # # calculate the Pearson Correlation
-            # # correlation_matrix = np.corrcoef(masked_binary_image.flatten(), rowvar=False)
-            # correlation_matrix = np.corrcoef(flattened_image, rowvar=True)
-            # print('-------------> coefficient: ', correlation_matrix)
-            #
-            # G = nx.Graph()
-            # num_features = features.shape[0]
-            # for f in range(num_features):
-            #     for j in range(f + 1, num_features):
-            #         correlation_coefficient = correlation_matrix[f, j]
-            #         if abs(correlation_coefficient) > threshold:
-            #             G.add_edge(f, j, weight=correlation_coefficient)
-
-            # ############################################################# try3
-            # show the graph
-            # pos = nx.spring_layout(G)  # You can use different layout algorithms
-            # nx.draw_networkx(G, pos=pos, with_labels=False, node_size=10)
-            # plt.show()
-
-            # graph_data = gdata(x=features, edge_index=torch.tensor(list(G.edges)).t().contiguous())
-            # graph_data = gdata(x=features, edge_index=on_voxels) # Create a PyTorch Geometric Data object
-            # # assigning labels to each graph # for experimenting, generating random labels
-            # graph_data.y = torch.randint(0, 2, (1,)).long()
-
-            # self.Graph_data_list.append(graph_data)
+            # Extract Unique ROIs from the Masked Image:
+            unique_rois = np.unique(aal_atlas_data_resampled_normalized)
+            unique_rois = unique_rois[unique_rois != 0]
+            print ("----------> unique_rois: ", len(unique_rois))
+            roi_nodes = [np.column_stack(np.where(aal_atlas_data_resampled_normalized == roi_value)) for roi_value in unique_rois]
+            print("----------> roi_nodes: ", roi_nodes)
 
     def print_graph_data_info(self):
         # Gather about the features and classes
@@ -342,34 +235,13 @@ class GraphClassifier(torch.nn.Module):
         x = global_add_pool(x, forward_data.batch)  # Global pooling to get a graph-level representation
         return x
 
-    def learn_nilear(self):
-        # plotting the image
-        nilearn.plotting.plot_img(self.atlas)
-        nilearn.plotting.show()
-
-        # plotting glass
-        plotting.plot_glass_brain(self.atlas, threshold=3)
-        nilearn.plotting.show()
-
-        # smoothing an image
-        smooth_anat_img = image.smooth_img(self.atlas, fwhm=3)
-        nilearn.plotting.plot_img(smooth_anat_img)
-        nilearn.plotting.show()
-
-        # plotting glass smoothing
-        plotting.plot_glass_brain(smooth_anat_img, threshold=3)
-        nilearn.plotting.show()
-
-        # plotting connectome
-        nilearn.plotting.plot_connectome(self.atlas)
-        nilearn.plotting.show()
 
 if __name__ == "__main__":
     ABIDE2_BNI_i = ABIDE2_BNI()
 
     # ################# printing Atlas #################
-    plotting.plot_roi(ABIDE2_BNI_i.AAL_Atlas_img_data, cmap='Paired', draw_cross=False, annotate=True, colorbar=True)
-    plotting.show()
+    # plotting.plot_roi(ABIDE2_BNI_i.AAL_Atlas_img_data, cmap='Paired', draw_cross=False, annotate=True, colorbar=True)
+    # plotting.show()
 
     # region_label = 2001
     # region_mask = (ABIDE2_BNI_i.AAL_Atlas_bin_data == region_label).astype(np.uint8)
