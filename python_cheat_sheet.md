@@ -147,6 +147,7 @@ bool(1) # True
 bool(0) # False
 int(True) # 1
 int(False) # 0 
+int(3.99)  # will cast this to 3. it cast to floor of the number. not rounding
 ```
 
 ### collection vs sequence vs iterable vs iterator
@@ -595,6 +596,11 @@ b converts the number to its binary representation
 
 ### primitive datatypes - float
 * same as integer, can be written as 123_333.34 the _ to make it easier to read
+**getting information about the float type**
+```
+import sys
+sys.float_info
+```
 
 ### primitive datatype - String
 * A string is a sequence of characters (letters, numbers, whitespace or punctuation) enclosed by quotation marks single or double. 
@@ -660,22 +666,40 @@ name[::1]   # Andrei Neagoie
 name[::-1]  # eiogaeN ierdnA
 name[0:10:2]# Ade e
 # : is called slicing and has the format [ start : end : step ]. the end is exclusive, means the end index value will not be included in the resulting string
+name[0:4]
+name[8:12]
+name[::2] # slicing from first to end with two steps, means step over a character . it is called striding
+name[0:5:2] # stride
 ```
 
 #### String Formatting
 ```
 name1 = 'Andrei'
 name2 = 'Sunny'
-print(f'Hello there {name1} and {name2}')       # Hello there Andrei and Sunny - Newer way to do things as of python 3.6
-print('Hello there {} and {}'.format(name1, name2))# Hello there Andrei and Sunny
+
+# The oldest way of formatting strings. using the % operator
 print('Hello there %s and %s' %(name1, name2))  # Hello there Andrei and Sunny --> you can also use %d, %f, %r for integers, floats, string representations of objects respectively
 
+## .format() This is another way to format strings in Python. It uses curly braces {} as placeholders for variables which are passed as arguments in the format() method. For example:
+print('Hello there {} and {}'.format(name1, name2))# using .format method to format strings. Hello there Andrei and Sunny
+# another example 
+print('Hello there {} and {}'.format(name1, name2))# using .format method to format strings. Hello there Andrei and Sunny
+
 ## use f-string to make a string with different data types variables inside 
+## Introduced in Python 3.6, f-strings are a new way to format strings in Python. They are prefixed with 'f' and use curly braces {} to enclose the variables that will be formatted. 
+# f-string has the capability of evaluating the expression inside the curly braces. 
 int_var = 0
 float_var = 2.3
 bool_var = True
-
 str_var = f"this has different types {int_var} and {float_var} and {bool_var}"
+print(f'Hello there {name1} and {name2}')       # using f-string format method. Hello there Andrei and Sunny - Newer way to do things as of python 3.6
+
+# raw string r 
+# raw strings are a powerful tool for handling textual data, especially when dealing with escape characters. By prefixing a string literal with the letter ‘r’, Python treats the string as raw, meaning it interprets backslashes as literal characters rather than escape sequences.
+
+#printing a backslash
+print("\\")
+print(r"\ ")
 ```
 
 #### Most Important String Methods
@@ -719,6 +743,12 @@ age = input("How old are you?")
 age = int(age)
 pi = input("What is the value of pi?")
 pi = float(pi)
+```
+
+#### concatenating 
+**Print the string for 3 times**
+```
+3 * "Michael Jackson"
 ```
 
 ### primitive datatype - Bool 
@@ -2421,6 +2451,7 @@ import re
 <list>  = re.split(<regex>, text, maxsplit=0)  # Use brackets in regex to keep the matches.
 <Match> = re.search(<regex>, text)             # Searches for first occurrence of pattern.
 <Match> = re.match(<regex>, text)              # Searches only at the beginning of the text.
+some_string.find("sub_string")                 # returns the first occurance of a match to the substring
 ```
 
 Match Object
@@ -2439,6 +2470,17 @@ Special Sequences
 '\d' == '[0-9]'          # Digit
 '\s' == '[ \t\n\r\f\v]'  # Whitespace
 '\w' == '[a-zA-Z0-9_]'   # Alphanumeric
+Regular expressions (RegEx) are patterns used to match and manipulate strings of text. There are several special sequences in RegEx that can be used to match specific characters or patterns.
+
+Special Sequence	Meaning	Example
+\d	Matches any digit character (0-9)	"123" matches "\d\d\d"
+\D	Matches any non-digit character	"hello" matches "\D\D\D\D\D"
+\w	Matches any word character (a-z, A-Z, 0-9, and _)	"hello_world" matches "\w\w\w\w\w\w\w\w\w\w\w"
+\W	Matches any non-word character	"@#$%" matches "\W\W\W\W"
+\s	Matches any whitespace character (space, tab, newline, etc.)	"hello world" matches "\w\w\w\w\w\s\w\w\w\w\w"
+\S	Matches any non-whitespace character	"hello_world" matches "\S\S\S\S\S\S\S\S\S"
+\b	Matches the boundary between a word character and a non-word character	"cat" matches "\bcat\b" in "The cat sat on the mat"
+\B	Matches any position that is not a word boundary	"cat" matches "\Bcat\B" in "category" but not in "The cat sat on the mat"
 ```
 
 example of Match
@@ -2460,6 +2502,70 @@ if match:
     print("Found email:", email)
 else:
     print("No email found.")
+```
+
+another example
+```
+pattern = r"\d\d\d\d\d\d\d\d\d\d"  # Matches any ten consecutive digits
+text = "My Phone number is 1234567890"
+match = re.search(pattern, text)
+
+if match:
+    print("Phone number found:", match.group())
+else:
+    print("No match")
+```
+
+example of \W. The regular expression pattern is defined as r"\W", which uses the \W special sequence to match any character that is not a word character (a-z, A-Z, 0-9, or _). The string we're searching for matches in is "Hello, world!".
+```
+pattern = r"\W"  # Matches any non-word character
+text = "Hello, world!"
+matches = re.findall(pattern, text)
+
+print("Matches:", matches)
+```
+
+findall
+```
+s2 = "Michael Jackson was a singer and known as the 'King of Pop'"
+
+
+# Use the findall() function to find all occurrences of the "as" in the string
+result = re.findall("as", s2)
+
+# Print out the list of matched words
+print(result)
+```
+
+re.split A regular expression's split() function splits a string into an array of substrings based on a specified pattern.
+```
+# Use the split function to split the string by the "\s"
+split_array = re.split("\s", s2)
+
+# The split_array contains all the substrings, split by whitespace characters
+print(split_array) 
+```
+
+sub. The sub function of a regular expression in Python is used to replace all occurrences of a pattern in a string with a specified replacement.
+```
+# Define the regular expression pattern to search for
+pattern = r"King of Pop"
+
+# Define the replacement string
+replacement = "legend"
+
+# Use the sub function to replace the pattern with the replacement string
+new_string = re.sub(pattern, replacement, s2, flags=re.IGNORECASE)
+
+# The new_string contains the original string with the pattern replaced by the replacement string
+print(new_string) 
+```
+
+```
+# Use re.sub() to replace "fox" with "bear"
+new_str1 = re.sub(r"fox", "bear", str1)
+
+print(new_str1)
 ```
 
 MetaCharacters are helpful, significant, and will be used in module re functions, which helps us comprehend the analogy with RE. The list of metacharacters is shown below.
