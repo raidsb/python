@@ -18,6 +18,17 @@ https://realpython.com/python-unittest/
 https://realpython.com/python-callable-instances/
 https://realpython.com/python-calendar-module/ 
 https://realpython.com/python-built-in-exceptions/ 
+https://realpython.com/preview/python-string-interpolation/ 
+https://realpython.com/preview/python-mappings/ 
+https://github.com/fgmacedo/python-statemachine # state-machine
+https://www.benkuhn.net/progessays/ # essays
+https://realpython.com/crud-operations/ # database
+https://realpython.com/python-mappings/#characteristics-of-the-mapping-abstract-base-class # mappings/
+https://realpython.com/preview/readme-python-project/ # readme python
+https://realpython.com/data-engineer-interview-questions-python/#questions-on-design-patterns-and-etl-concepts # data enginnering
+https://realpython.com/data-engineer-interview-questions-python/#questions-on-design-patterns-and-etl-concepts # data engineering interview questions 
+https://realpython.com/bonus/python-mastery-course/ # mastering python to the next level 
+https://realpython.com/cpython-source-code-guide/ # cpython 
 
 ## learning resources - data science
 https://www.datacamp.com/cheat-sheet
@@ -25,6 +36,7 @@ https://www.kdnuggets.com/free-python-resources-that-can-help-you-become-a-pro
 https://oli.cmu.edu/courses/principles-of-computation-with-python-open-free/ 
 https://www.freecodecamp.org/learn/data-analysis-with-python/
 https://www.kdnuggets.com/2022/09/free-python-data-science-course.html
+https://www.blog.pythonlibrary.org/2024/05/13/how-to-annotate-a-graph-with-matplotlib-and-python/ # matplotlib 
 
 ## learning resources - QA
 https://hackr.io/blog/python-interview-questions 
@@ -129,7 +141,14 @@ While casting is a form of type conversion, not all type conversions involve cas
 # examples 
 str(int_var)   # convert int to string
 float(str_var) # convert str to float
+int(float_number) # you will lose information 
+float(int)     # no loss of information
+bool(1) # True
+bool(0) # False
+int(True) # 1
+int(False) # 0 
 ```
+
 ### collection vs sequence vs iterable vs iterator
 Understanding the distinctions between collection, iterable, iterator, and sequence is fundamental to grasping the behavior and characteristics of data structures and objects in Python:
 
@@ -549,6 +568,7 @@ type(0)   # int
 type(0.0) # float
 type(2.2) # float
 type(4E2) # float - 4*10 to the power of 2
+type(False) # bool
 ```
 
 ### primitive datatype - integer

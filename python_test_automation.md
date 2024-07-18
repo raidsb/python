@@ -9,6 +9,8 @@ https://www.travis-ci.com/
 https://realpython.com/python-continuous-integration/ 
 https://realpython.com/python-code-quality/ 
 https://lukeplant.me.uk/blog/posts/pyastgrep-and-custom-linting/ 
+https://www.bitecode.dev/p/testing-with-python-part-6-fake-it mocking 
+https://realpython.com/preview/ruff-python/ # new linter
 
 # Top test automation libraries in python
 Here are 23 libraries you'll find in this guide for why Python is so awesome:
