@@ -59,6 +59,38 @@ some of the unique features of python:
 5* Applies automated garbage collection.
 6* It could be used effectively along with Java, COBRA, C, C++, ActiveX, and COM.
 
+### Glossary
+Aliasing	Aliasing refers to giving another name to a function or a variable.
+Ampersand	A character typically "&" standing for the word "and."
+Compound elements	Compound statements contain (groups of) other statements; they affect or control the execution of those other statements in some way.
+Delimiter	A delimiter in Python is a character or sequence of characters used to separate or mark the boundaries between elements or fields within a larger data structure, such as a string or a file.
+Dictionaries	A dictionary in Python is a data structure that stores a collection of key-value pairs, where each key is unique and associated with a specific value.
+Function	A function is a block of code, defining a set procedure, which is executed only when it is called.
+Immutable	Immutable Objects are of in-built datatypes like int, float, bool, string, Unicode, and tuple. In simple words, an immutable object can't be changed after it is created.
+Intersection	The intersection of two given sets is the largest set, which contains all the elements that are common to both sets.
+Keys	The keys () method in Python Dictionary, returns a view object that displays a list of all the keys in the dictionary in order of insertion using Python.
+Lists	A list is any list of data items, separated by commas, inside square brackets.
+Logic operations	In Python, logic operations refer to the use of logical operators such as "and," "or," and "not" to perform logical operations on Boolean values (True or False).
+Mutable	Immutable objects are of in-built datatypes like int, float, bool, string, Unicode, and tuple. A mutable object can be changed after it is created.
+Nesting	A nested function is simply a function within another function and is sometimes called an "inner function".
+Ratings in python	Ratings in Python typically refer to a numerical or qualitative measure assigned to something to indicate its quality, performance, or value.
+Set operations	Set operations in Python refer to mathematical operations performed on sets, which are unordered collections of unique elements.
+Sets in python	A set is an unordered collection of unique elements.
+Syntax	The rules that define the structure of the language for python is called its syntax.
+Tuples	These are used store multiple items in a single variable.
+Type casting	In python, this is converting one data type to another.
+Variables	In python, a variable is a symbolic name or identifier used to store and manipulate data. Variables serve as containers for values, and these values can be of various data types, including numbers, strings, lists, and more.
+Venn diagram	A Venn diagram is a graphical representation that uses overlapping circles to illustrate the relationships and commonalities between sets or groups of items.
+Versatile data	Versatile data, in a general context, refers to data that can be used in multiple ways, is adaptable to different applications or purposes, and is not restricted to a specific use case.
+
+### exceptions
+Aspect	Errors	Exceptions
+Origin	Errors are typically caused by the environment, hardware, or operating system.	Exceptions are usually a result of problematic code execution within the program.
+Nature	Errors are often severe and can lead to program crashes or abnormal termination.	Exceptions are generally less severe and can be caught and handled to prevent program termination.
+Handling	Errors are not usually caught or handled by the program itself.	Exceptions can be caught using try-except blocks and dealt with gracefully, allowing the program to continue execution.
+Examples	Examples include “SyntaxError” due to incorrect syntax or “NameError” when a variable is not defined.	Examples include “ZeroDivisionError” when dividing by zero, or “FileNotFoundError” when attempting to open a non-existent file.
+Categorization	Errors are not classified into categories.	Exceptions are categorized into various classes, such as “ArithmeticError,” “IOError,” ValueError,” etc., based on their nature.
+
 ### scripting vs programming language
 * As a scripting language, Python is often used for automating tasks, executing scripts, and rapid prototyping. It's well-suited for tasks such as system administration, web development, data analysis, and scientific computing.
 * As a programming language, Python is used to develop a wide range of software applications, including desktop GUI applications, web applications, games, artificial intelligence systems, and more. Python's versatility, readability, and extensive standard library make it a popular choice for software development projects of all sizes.
@@ -793,10 +825,33 @@ keysList = list(mydict.keys())
 
 # check if key exists in keys
 if key_to_check in my_dict.keys():
+
+#The update() method merges the provided dictionary into the existing dictionary, adding or updating key-value pairs.
+person.update({"Profession": "Doctor"})
 ```
+
+Creates a shallow copy of the dictionary. The new dictionary contains the same key-value pairs as the original, but they remain distinct objects in memory.
+```
+new_dict = dict_name.copy()
+
+new_person = person.copy()
+new_person = dict(person) # another way to create a copy of dictionary
+```
+
+convert keys to list
+```
+keys_list = list(dict_name.keys())
+person_values = list(person.values()) # for values
+items_list = list(dict_name.items()) # get the key, value pairs as list of tuples
+```
+
+
 
 ### built-in non-primitive datatype - Lists
 Unlike strings, lists are mutable sequences in python
+
+#### list content can be anything
+["Michael Jackson", 10.1, 1982, [1, 2], ("A", 1)] 
 
 #### adding to the List
 ```
@@ -812,6 +867,15 @@ my_list.extend({3, 'False', 6})  # None --> Mutates original list to [1, 2, '3',
 my_list.insert(2, '!!!')   # None -->  [1, 2, '!!!', '3', True] - Inserts item at index and moves the rest to the right.
 
 ' '.join(['Hello','There'])# 'Hello There' --> Joins elements using string as separator.
+```
+
+#### copying 
+```
+B = A # just copies the reference
+
+# Clone (clone by value) the list A
+B = A[:]
+
 ```
 
 #### list copying
@@ -1214,6 +1278,13 @@ list1 = list(set(ranked)) # returns a newly created list
 [18] top of the stack: list[-1]
 
 ## built-in non-primitive datatype - Dictionary
+the key can be anything immutable like a tuple
+```
+# Access to the value by the key
+
+Dict[(0, 1)]
+```
+
 ```
 my_dict = {'name': 'Andrei Neagoie', 'age': 30, 'magic_power': False}
 my_dict['name']                      # Andrei Neagoie
@@ -1355,6 +1426,22 @@ my_set = set()
 my_set.add(1)  # {1}
 my_set.add(100)# {1, 100}
 my_set.add(100)# {1, 100} --> no duplicates!
+
+# creating set from a list
+album_list = [ "Michael Jackson", "Thriller", 1982, "00:42:19", \
+              "Pop, Rock, R&B", 46.0, 65, "30-Nov-82", None, 10.0]
+album_set = set(album_list)           
+
+music_genres = set(["pop", "pop", "rock", "folk rock", "hard rock", "soul", \
+                    "progressive rock", "soft rock", "R&B", "disco"])
+music_genres  
+```
+
+adding to the set 
+```
+# Add element to set
+
+A.add("NSYNC")
 ```
 
 Deleting elements
@@ -1385,6 +1472,36 @@ Frozen set
 # Frozenset
 # hashable --> it can be used as a key in a dictionary or as an element in a set.
 <frozenset> = frozenset(<collection>)
+```
+
+logic operations
+```
+# Find the intersections
+intersection = album_set1 & album_set2
+
+# Find the difference in set1 but not set2
+album_set1.difference(album_set2)  
+
+# Find the difference in set2 but not set1
+album_set2.difference(album_set1)  
+
+# Union
+# Find the union of two sets
+album_set1.union(album_set2) # {'AC/DC', 'Back in Black', 'The Dark Side of the Moon', 'Thriller'}
+
+# Check if superset
+set(album_set1).issuperset(album_set2) 
+
+# Check if subset
+set(album_set2).issubset(album_set1)
+
+# Check if subset
+set({"Back in Black", "AC/DC"}).issubset(album_set1)
+
+# Check if superset
+album_set1.issuperset({"Back in Black", "AC/DC"})
+
+fruits.update(["kiwi", "grape"]) # The `update()` method adds elements from another iterable into the set. It maintains the uniqueness of elements.
 ```
 
 ## Mathematical operations
