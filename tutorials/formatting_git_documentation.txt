@@ -1,4 +1,4 @@
-formatting github documentation source: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#paragraphs
+# formatting github documentation source: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#paragraphs
 headers:
 # A first-level heading
 ## A second-level heading
@@ -13,5 +13,9 @@ bulleting:
 - or * or + to make a list
 1. for numbered bullets
 
+# refering to a file
+[Link text](relative/path/to/file.ext)
 
+# refering to a file and line numbered
+[Link to line 20 in another file](other_file.md#L20)
 

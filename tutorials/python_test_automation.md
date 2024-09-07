@@ -186,6 +186,17 @@ def test_sum_tuple():
     assert sum((1, 2, 2)) == 6, "Should be 6"
 ```
 
+cmdline to run pytest in powershell
+```
+# in the terminal in the main folder of the project
+> pytest
+
+# to run a specific test file
+> pytest tests\test_login_page.py
+
+# to run a specific test in a test File
+> pytest tests\test_login_page.py::test_name
+```
 # writing first test case
 1. Create a new project folder and, inside that, create a new folder called my_sum. Inside my_sum, create an empty file called __init__.py. Creating the __init__.py file means that the my_sum folder can be imported as a module from the parent directory.
 
